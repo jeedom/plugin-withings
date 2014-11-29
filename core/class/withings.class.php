@@ -436,6 +436,14 @@ class withings extends eqLogic {
                 }
             }
         }
+
+        $mc = cache::byKey('withingsWidgetmobile' . $this->getId());
+        $mc->remove();
+        $mc = cache::byKey('withingsWidgetdashboard' . $this->getId());
+        $mc->remove();
+        $this->toHtml('mobile');
+        $this->toHtml('dashboard');
+        $this->refreshWidget();
     }
 
     /*     * **********************Getteur Setteur*************************** */
@@ -449,14 +457,6 @@ class withingsCmd extends cmd {
 
 
     /*     * *********************Methode d'instance************************* */
-
-    public function toHtml($_version = 'dashboard', $options = '', $_cmdColor = NULL, $_cache = 2) {
-        $html = parent::toHtml($_version, $options, $_cmdColor, $_cache);
-        $replace = array(
-            '#goal#' => $this->getConfiguration('goal'),
-        );
-        return template_replace($replace, $html);
-    }
 
     public function execute($_options = null) {
         return '';
