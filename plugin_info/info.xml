@@ -3,7 +3,7 @@
     <id>withings</id>
     <name>Withings</name>
     <description>Plugin pour Withings</description>
-    <icon>fa fa-envelope</icon>
+    <icon>icon loisir-exercise1</icon>
     <licence>AGPL</licence>
     <author>Loïc Gevrey</author>
     <installation>Aucune</installation>

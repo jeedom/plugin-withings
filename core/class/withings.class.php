@@ -35,7 +35,7 @@ class withings extends eqLogic {
 
     public static function getCallbackUri() {
         $url = config::byKey('externalAddr');
-        if (strpos('http://', $url) != 0 && strpos('https://', $url) != 0) {
+        if (strpos($url, 'http://') !== 0 && strpos($url, 'https://') !== 0) {
             $url = 'http://' . $url;
         }
         if (config::byKey('externalPort') != '' && config::byKey('externalPort') != 80) {
