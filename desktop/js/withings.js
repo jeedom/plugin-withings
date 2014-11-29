@@ -15,6 +15,8 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+$("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+
 $('#bt_linkToUser').on('click', function () {
     $.ajax({// fonction permettant de faire de l'ajax
         type: "POST", // methode de transmission des données au fichier php

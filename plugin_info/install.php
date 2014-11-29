@@ -25,7 +25,7 @@ function fitbit_install() {
         $cron->setClass('withing');
         $cron->setFunction('pull');
         $cron->setEnable(1);
-        $cron->setSchedule('00 * * * *');
+        $cron->setSchedule('*/30 * * * *');
         $cron->save();
     }
 }
@@ -37,7 +37,7 @@ function fitbit_update() {
         $cron->setClass('withing');
         $cron->setFunction('pull');
         $cron->setEnable(1);
-        $cron->setSchedule('00 * * * *');
+        $cron->setSchedule('*/30 * * * *');
         $cron->save();
     }
     $cron->stop();
