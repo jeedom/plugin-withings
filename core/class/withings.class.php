@@ -46,7 +46,7 @@ class withings extends eqLogic {
     /*     * *********************Methode d'instance************************* */
 
     public function linkToUser() {
-        session_start();
+        @session_start();
         $_SESSION['withings_Session'] = 0;
         $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
         return $withings->initSession(self::getCallbackUri() . '?eqLogic_id=' . $this->getId());

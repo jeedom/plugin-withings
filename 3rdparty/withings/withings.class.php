@@ -120,9 +120,9 @@ class WithingsPHP {
             $_SESSION['withings_Session'] = 0;
 
 
-        if (!isset($_GET['oauth_token']) && $_SESSION['withings_Session'] == 1)
+        if (!isset($_GET['oauth_token']) && $_SESSION['withings_Session'] == 1) {
             $_SESSION['withings_Session'] = 0;
-
+        }
 
         if ($_SESSION['withings_Session'] == 0) {
 
@@ -130,7 +130,7 @@ class WithingsPHP {
 
             $_SESSION['withings_Secret'] = $request_token_info['oauth_token_secret'];
             $_SESSION['withings_Session'] = 1;
-
+            @session_write_close();
             return $this->authUrl . '?oauth_token=' . $request_token_info['oauth_token'];
         } else if ($_SESSION['withings_Session'] == 1) {
 
@@ -142,9 +142,11 @@ class WithingsPHP {
             $_SESSION['withings_Secret'] = $access_token_info['oauth_token_secret'];
 
             $this->setOAuthDetails($_SESSION['withings_Token'], $_SESSION['withings_Secret']);
+            @session_write_close();
             return 1;
         } else if ($_SESSION['withings_Session'] == 2) {
             $this->setOAuthDetails($_SESSION['withings_Token'], $_SESSION['withings_Secret']);
+            @session_write_close();
             return 2;
         }
     }
