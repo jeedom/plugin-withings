@@ -18,8 +18,8 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-function fitbit_install() {
-    $cron = cron::byClassAndFunction('withing', 'pull');
+function withings_install() {
+    $cron = cron::byClassAndFunction('withings', 'pull');
     if (!is_object($cron)) {
         $cron = new cron();
         $cron->setClass('withing');
@@ -30,8 +30,8 @@ function fitbit_install() {
     }
 }
 
-function fitbit_update() {
-    $cron = cron::byClassAndFunction('withing', 'pull');
+function withings_update() {
+    $cron = cron::byClassAndFunction('withings', 'pull');
     if (!is_object($cron)) {
         $cron = new cron();
         $cron->setClass('withing');
@@ -43,8 +43,8 @@ function fitbit_update() {
     $cron->stop();
 }
 
-function fitbit_remove() {
-    $cron = cron::byClassAndFunction('withing', 'pull');
+function withings_remove() {
+    $cron = cron::byClassAndFunction('withings', 'pull');
     if (is_object($cron)) {
         $cron->remove();
     }

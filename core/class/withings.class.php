@@ -354,9 +354,9 @@ class withings extends eqLogic {
 
         $distance = $this->getCmd(null, 'distance');
         if (is_object($distance)) {
-            if (isset($activity['body']['distance']) && $distance->execCmd() != $distance->formatValue($activity['body']['distance'] / 1000)) {
+            if (isset($activity['body']['distance']) && $distance->execCmd() != $distance->formatValue(round($activity['body']['distance'] / 1000,2))) {
                 $distance->setCollectDate('');
-                $distance->event($activity['body']['distance'] / 1000);
+                $distance->event(round($activity['body']['distance'] / 1000,2));
             }
         }
 
@@ -380,33 +380,33 @@ class withings extends eqLogic {
 
         $wakeupduration = $this->getCmd(null, 'wakeupduration');
         if (is_object($wakeupduration)) {
-            if (isset($sleepSummary['body']['series'][0]['data']['wakeupduration']) && $wakeupduration->execCmd() !== $wakeupduration->formatValue($sleepSummary['body']['series'][0]['data']['wakeupduration'] / 60)) {
+            if (isset($sleepSummary['body']['series'][0]['data']['wakeupduration']) && $wakeupduration->execCmd() !== $wakeupduration->formatValue(round($sleepSummary['body']['series'][0]['data']['wakeupduration'] / 60, 2))) {
                 $wakeupduration->setCollectDate('');
-                $wakeupduration->event($sleepSummary['body']['series'][0]['data']['wakeupduration'] / 60);
+                $wakeupduration->event(round($sleepSummary['body']['series'][0]['data']['wakeupduration'] / 60, 2));
             }
         }
 
         $durationtosleep = $this->getCmd(null, 'durationtosleep');
         if (is_object($durationtosleep)) {
-            if (isset($sleepSummary['body']['series'][0]['data']['durationtosleep']) && $durationtosleep->execCmd() != $durationtosleep->formatValue($sleepSummary['body']['series'][0]['data']['durationtosleep'] / 60)) {
+            if (isset($sleepSummary['body']['series'][0]['data']['durationtosleep']) && $durationtosleep->execCmd() != $durationtosleep->formatValue(round($sleepSummary['body']['series'][0]['data']['durationtosleep'] / 60, 2))) {
                 $durationtosleep->setCollectDate('');
-                $durationtosleep->event($sleepSummary['body']['series'][0]['data']['durationtosleep'] / 60);
+                $durationtosleep->event(round($sleepSummary['body']['series'][0]['data']['durationtosleep'] / 60, 2));
             }
         }
 
         $deepsleepduration = $this->getCmd(null, 'deepsleepduration');
         if (is_object($deepsleepduration)) {
-            if (isset($sleepSummary['body']['series'][0]['data']['deepsleepduration']) && $deepsleepduration->execCmd() != $deepsleepduration->formatValue($sleepSummary['body']['series'][0]['data']['deepsleepduration'] / 60)) {
+            if (isset($sleepSummary['body']['series'][0]['data']['deepsleepduration']) && $deepsleepduration->execCmd() != $deepsleepduration->formatValue(round($sleepSummary['body']['series'][0]['data']['deepsleepduration'] / 60, 2))) {
                 $deepsleepduration->setCollectDate('');
-                $deepsleepduration->event($sleepSummary['body']['series'][0]['data']['deepsleepduration'] / 60);
+                $deepsleepduration->event(round($sleepSummary['body']['series'][0]['data']['deepsleepduration'] / 60, 2));
             }
         }
 
         $lightsleepduration = $this->getCmd(null, 'lightsleepduration');
         if (is_object($lightsleepduration)) {
-            if (isset($sleepSummary['body']['series'][0]['data']['lightsleepduration']) && $lightsleepduration->execCmd() != $lightsleepduration->formatValue($sleepSummary['body']['series'][0]['data']['lightsleepduration'] / 60)) {
+            if (isset($sleepSummary['body']['series'][0]['data']['lightsleepduration']) && $lightsleepduration->execCmd() != $lightsleepduration->formatValue(round($sleepSummary['body']['series'][0]['data']['lightsleepduration'] / 60, 2))) {
                 $lightsleepduration->setCollectDate('');
-                $lightsleepduration->event($sleepSummary['body']['series'][0]['data']['lightsleepduration'] / 60);
+                $lightsleepduration->event(round($sleepSummary['body']['series'][0]['data']['lightsleepduration'] / 60, 2));
             }
         }
 
@@ -423,9 +423,9 @@ class withings extends eqLogic {
             foreach ($body['body']['measuregrps'][0]['measures'] as $measure) {
                 $cmd = $this->getCmd(null, 'measuregrps' . $measure['type']);
                 if (is_object($cmd)) {
-                    $value = $measure['value'];
+                    $value = round($measure['value'],2);
                     if ($measure['type'] == 1 || $measure['type'] == 5 || $measure['type'] == 6 || $measure['type'] == 8) {
-                        $value = $value / 1000;
+                        $value = round($value / 1000, 2);
                     }
                     if ($cmd->execCmd() != $cmd->formatValue($value)) {
                         $cmd->setCollectDate('');
