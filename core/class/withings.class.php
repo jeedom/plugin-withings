@@ -343,12 +343,11 @@ class withings extends eqLogic {
 
     public function syncWithWithings() {
         $activity = $this->getActivity(date('Y-m-d'));
-
         $step = $this->getCmd(null, 'step');
         if (is_object($step)) {
-            if (isset($activity['body']['step']) && $step->execCmd() != $step->formatValue($activity['body']['step'])) {
+            if (isset($activity['body']['steps']) && $step->execCmd() != $step->formatValue($activity['body']['steps'])) {
                 $step->setCollectDate('');
-                $step->event($activity['body']['step']);
+                $step->event($activity['body']['steps']);
             }
         }
 
