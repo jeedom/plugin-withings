@@ -1,7 +1,5 @@
 <?php
-
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
-require_once dirname(__FILE__) . '/../../core/php/withings.inc.php';
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
     echo 'Vous ne pouvez appeller cette page sans être connecté. Veuillez vous connecter <a href=' . withings::getCallbackUri('/index.php') . '>ici</a> avant et refaire l\'opération de synchronisation';

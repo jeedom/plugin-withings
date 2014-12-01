@@ -53,9 +53,9 @@ class withings extends eqLogic {
     }
 
     public function getWithings() {
-        $fitbit = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-        $fitbit->setOAuthDetails($this->getConfiguration('token'), $this->getConfiguration('secret'));
-        return $fitbit;
+        $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
+        $withings->setOAuthDetails($this->getConfiguration('token'), $this->getConfiguration('secret'));
+        return $withings;
     }
 
     public function getActivity($_date) {

@@ -10,7 +10,6 @@ sendVarToJS('eqType', 'withings');
         <div class="bs-sidebar">
             <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
                 <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter une personne}}</a>
-
                 <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
                 <?php
                 foreach (eqLogic::byType('withings') as $eqLogic) {
@@ -69,7 +68,7 @@ sendVarToJS('eqType', 'withings');
             </fieldset> 
         </form>
 
-        <legend>{{Template}}</legend>
+        <legend>{{Commandes}}</legend>
         <table id="table_cmd" class="table table-bordered table-condensed">
             <thead>
                 <tr>
