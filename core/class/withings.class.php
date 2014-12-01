@@ -85,9 +85,32 @@ class withings extends eqLogic {
         $_version = jeedom::versionAlias($_version);
         $mc = cache::byKey('withingsWidget' . $_version . $this->getId());
         if ($mc->getValue() != '') {
-            return $mc->getValue();
+          //  return $mc->getValue();
         }
         $html = parent::toHtml($_version);
+        /* $replace = array(
+            '#name#' => $this->getName(),
+            '#id#' => $this->getId(),
+            '#background_color#' => $this->getBackgroundColor($_version),
+            '#eqLink#' => $this->getLinkToConfiguration(),
+        );
+
+        foreach ($this->getCmd() as $cmd) {
+            if ($cmd->getIsVisible() == 1) {
+                $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
+            } else {
+                $replace['#' . $cmd->getLogicalId() . '#'] = '';
+            }
+        }
+        $parameters = $this->getDisplay('parameters');
+        if (is_array($parameters)) {
+            foreach ($parameters as $key => $value) {
+                $replace['#' . $key . '#'] = $value;
+            }
+        }
+
+        $html = template_replace($replace, getTemplate('core', $_version, 'withings', 'withings'));
+        cache::set('withingsWidget' . $_version . $this->getId(), $html, 0);*/
         cache::set('withingsWidget' . $_version . $this->getId(), $html, 0);
         return $html;
     }
