@@ -85,9 +85,8 @@ class withings extends eqLogic {
         $_version = jeedom::versionAlias($_version);
         $mc = cache::byKey('withingsWidget' . $_version . $this->getId());
         if ($mc->getValue() != '') {
-            //  return $mc->getValue();
+            return $mc->getValue();
         }
-        // $html = parent::toHtml($_version);
         $replace = array(
             '#name#' => $this->getName(),
             '#id#' => $this->getId(),
