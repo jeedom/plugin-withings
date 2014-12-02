@@ -1,0 +1,49 @@
+<div class="eqLogic-widget eqLogic noResize" style="width: 330px;background-color: #background_color#; padding : 0px; #style#" data-eqLogic_id="#id#" data-version="dashboard" >
+    <center><strong><a href="#eqLink#" style="font-size : 1.1em;"> #name# </a></strong></center>
+
+    <div class="row">
+        <div class="col-sm-6" style="margin-left: 10px;" >
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped durationtosleep" title="Temps pour s'endormir : #durationtosleep# min"></div>
+                <div class="progress-bar progress-bar-warning progress-bar-striped lightsleepduration" title='Durée sommeil léger : #lightsleepduration# min'></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped deepsleepduration"  title='Durée sommeil profond : #deepsleepduration# min'></div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <i class="icon personne-sleeping4"></i> <span class="totalSleep"></span> <i class="icon divers-circular114"></i> #wakeupcount#
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6" style="margin-left: 10px;" >
+            <div class="progress">
+                <div class="progress-bar progress-bar-danger progress-bar-striped measuregrps8" title="Masse grasse : #measuregrps8#"></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped measuregrps5" title='Masse maigre : #measuregrps5#'></div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <i class="icon divers-weight11"></i> #measuregrps1# kg
+        </div>
+    </div>
+
+    <center>
+        <i class="fa fa-heart"></i> #measuregrps11# bpm / #measuregrps54# %<br/>
+        <i class="icon loisir-runner5" title="Nombre de pas"></i> #step#
+        <i class="icon nourriture-cherries" title="Calories brulées"></i> #calories#
+        <i class="fa fa-arrows-h" title="Distance parcourue"></i> #distance# Km
+        <i class="fa fa-arrows-v" title="Elévation"></i> #elevation# m
+    </center>
+
+    <script>
+        var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
+        $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + (totalSleep % 60));
+        $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').css('width', (parseInt('#durationtosleep#') / totalSleep * 100) + '%');
+        $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').css('width', (parseInt('#deepsleepduration#') / totalSleep * 100) + '%');
+        $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').css('width', (parseInt('#lightsleepduration#') / totalSleep * 100) + '%');
+
+        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').css('width', (parseInt('#measuregrps8#') / parseInt('#measuregrps1#') * 100) + '%');
+        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').css('width', (parseInt('#measuregrps5#') / parseInt('#measuregrps1#') * 100) + '%');
+    </script>
+
+</div>
+

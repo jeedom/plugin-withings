@@ -85,10 +85,10 @@ class withings extends eqLogic {
         $_version = jeedom::versionAlias($_version);
         $mc = cache::byKey('withingsWidget' . $_version . $this->getId());
         if ($mc->getValue() != '') {
-          //  return $mc->getValue();
+            //  return $mc->getValue();
         }
-        $html = parent::toHtml($_version);
-        /* $replace = array(
+        // $html = parent::toHtml($_version);
+        $replace = array(
             '#name#' => $this->getName(),
             '#id#' => $this->getId(),
             '#background_color#' => $this->getBackgroundColor($_version),
@@ -110,7 +110,6 @@ class withings extends eqLogic {
         }
 
         $html = template_replace($replace, getTemplate('core', $_version, 'withings', 'withings'));
-        cache::set('withingsWidget' . $_version . $this->getId(), $html, 0);*/
         cache::set('withingsWidget' . $_version . $this->getId(), $html, 0);
         return $html;
     }
@@ -376,9 +375,9 @@ class withings extends eqLogic {
 
         $distance = $this->getCmd(null, 'distance');
         if (is_object($distance)) {
-            if (isset($activity['body']['distance']) && $distance->execCmd() != $distance->formatValue(round($activity['body']['distance'] / 1000,2))) {
+            if (isset($activity['body']['distance']) && $distance->execCmd() != $distance->formatValue(round($activity['body']['distance'] / 1000, 2))) {
                 $distance->setCollectDate('');
-                $distance->event(round($activity['body']['distance'] / 1000,2));
+                $distance->event(round($activity['body']['distance'] / 1000, 2));
             }
         }
 
@@ -445,7 +444,7 @@ class withings extends eqLogic {
             foreach ($body['body']['measuregrps'][0]['measures'] as $measure) {
                 $cmd = $this->getCmd(null, 'measuregrps' . $measure['type']);
                 if (is_object($cmd)) {
-                    $value = round($measure['value'],2);
+                    $value = round($measure['value'], 2);
                     if ($measure['type'] == 1 || $measure['type'] == 5 || $measure['type'] == 6 || $measure['type'] == 8) {
                         $value = round($value / 1000, 2);
                     }
