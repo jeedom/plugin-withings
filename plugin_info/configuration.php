@@ -27,7 +27,7 @@ if (!isConnect()) {
         <?php
         if (!class_exists('OAuth')) {
             echo '<div class="alert alert-danger">';
-            echo 'Classe OAuth non trouvée merci de l\'installer : "sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart"';
+            echo 'Classe OAuth non trouvée merci de l\'installer : "sudo apt-get install -y php5-dev;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart"';
             echo '</div>';
         } ?>
     </fieldset>
