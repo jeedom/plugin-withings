@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function withings_install() {
     if (!class_exists('OAuth')) {
-        @exec('{ sudo apt-get update;sudo apt-get install -y php5-dev php5-pear libpcre3-dev make;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart } &"');
+        @exec('{ sudo apt-get update;sudo apt-get install -y php5-dev php-pear libpcre3-dev make;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart } &"');
     }
     $cron = cron::byClassAndFunction('withings', 'pull');
     if (!is_object($cron)) {
