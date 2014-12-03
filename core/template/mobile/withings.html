@@ -1,24 +1,44 @@
 <div class="eqLogic-widget eqLogic noResize" style="width: 330px;background-color: #background_color#; padding : 0px; #style#" data-eqLogic_id="#id#" data-version="dashboard" >
     <center>#name#</center>
     <center>
-        <i class="icon personne-sleeping4"></i> <span class="totalSleep"></span> <i class="icon divers-circular114"></i> #wakeupcount#<br/>
-        <i class="icon divers-weight11"></i> #measuregrps1# kg
-        <i class="fa fa-heart"></i> #measuregrps11# bpm / #measuregrps54# %<br/>
-        <i class="icon loisir-runner5" title="Nombre de pas"></i> #step#
-        <i class="icon nourriture-cherries" title="Calories brulées"></i> #calories#
-        <i class="fa fa-arrows-h" title="Distance parcourue"></i> #distance# Km
-        <i class="fa fa-arrows-v" title="Elévation"></i> #elevation# m
+        <span class="sleep"><i class="icon personne-sleeping4"></i> <span class="totalSleep"></span> <i class="icon divers-circular114"></i> #wakeupcount#<br/></span>
+        <span class="body"><i class="icon divers-weight11"></i> #measuregrps1# kg</span>
+        <span class="heart"><i class="fa fa-heart"></i> #measuregrps11# bpm / #measuregrps54# %<br/></span>
+        <span class="step"><i class="icon loisir-runner5" title="Nombre de pas"></i> #step#</span>
+        <span class="calories"><i class="icon nourriture-cherries" title="Calories brulées"></i> #calories#</span>
+        <span class="distance"><i class="fa fa-arrows-h" title="Distance parcourue"></i> #distance# Km</span>
+        <span class="elevation"><i class="fa fa-arrows-v" title="Elévation"></i> #elevation# m</span>
     </center>
 
     <script>
-        var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
-        $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + (totalSleep % 60));
-        $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').css('width', (parseInt('#durationtosleep#') / totalSleep * 100) + '%');
-        $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').css('width', (parseInt('#deepsleepduration#') / totalSleep * 100) + '%');
-        $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').css('width', (parseInt('#lightsleepduration#') / totalSleep * 100) + '%');
-
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').css('width', (parseInt('#measuregrps8#') / parseInt('#measuregrps1#') * 100) + '%');
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').css('width', (parseInt('#measuregrps5#') / parseInt('#measuregrps1#') * 100) + '%');
+        if (isNaN(parseInt('#durationtosleep#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .sleep').remove();
+        } else {
+            var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
+            var minute = (totalSleep % 60);
+            minute = minute.toString()
+            if (minute.length == 1) {
+                minute = '0' + minute;
+            }
+        }
+        if (isNaN(parseInt('#measuregrps1#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .body').remove();
+        }
+        if (isNaN(parseInt('#measuregrps11#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
+        }
+        if (isNaN(parseInt('#step#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
+        }
+        if (isNaN(parseInt('#calorie#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .calorie').remove();
+        }
+        if (isNaN(parseInt('#distance#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
+        }
+        if (isNaN(parseInt('#elevation#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
+        }
     </script>
 
 </div>

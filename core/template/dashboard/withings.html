@@ -40,10 +40,10 @@
             $('.eqLogic[data-eqLogic_id=#id#] .sleep').remove();
         } else {
             var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
-            var minute  = (totalSleep % 60);
-            minute= minute.toString()
-            if(minute.length == 1){
-               minute = '0'+minute; 
+            var minute = (totalSleep % 60);
+            minute = minute.toString()
+            if (minute.length == 1) {
+                minute = '0' + minute;
             }
             $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + minute);
             $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').css('width', (parseInt('#durationtosleep#') / totalSleep * 100) + '%');
@@ -61,7 +61,7 @@
                 $('.eqLogic[data-eqLogic_id=#id#] .weightOther').css('width', (weightOther / parseInt('#measuregrps1#') * 100) + '%');
             }
         }
-         if (isNaN(parseInt('#measuregrps14#'))) {
+        if (isNaN(parseInt('#measuregrps14#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
         }
         if (isNaN(parseInt('#measuregrps11#'))) {
