@@ -1,7 +1,7 @@
 <div class="eqLogic-widget eqLogic noResize" style="width: 330px;background-color: #background_color#; padding : 0px; #style#" data-eqLogic_id="#id#" data-version="dashboard" >
     <center><a href="#eqLink#" style="font-size : 1.5em;"> #name# </a></center>
 
-    <div class="row">
+    <div class="row sleep">
         <div class="col-sm-6" style="margin-left: 10px;" >
             <div class="progress">
                 <div class="progress-bar progress-bar-striped durationtosleep" title="Temps pour s'endormir : #durationtosleep# min"></div>
@@ -14,11 +14,12 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row body">
         <div class="col-sm-6" style="margin-left: 10px;" >
             <div class="progress">
-                <div class="progress-bar progress-bar-danger progress-bar-striped measuregrps8" title="Masse grasse : #measuregrps8#"></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped measuregrps5" title='Masse maigre : #measuregrps5#'></div>
+                <div class="progress-bar progress-bar-danger progress-bar-striped measuregrps8" title="Masse grasse : #measuregrps8# kg"></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped measuregrps5" title='Masse maigre : #measuregrps5# kg'></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped weightOther" title='Autre : 0 kg'></div>
             </div>
         </div>
         <div class="col-sm-5">
@@ -27,22 +28,57 @@
     </div>
 
     <center>
-        <i class="fa fa-heart"></i> #measuregrps11# bpm / #measuregrps54# %<br/>
-        <i class="icon loisir-runner5" title="Nombre de pas"></i> #step#
-        <i class="icon nourriture-cherries" title="Calories brulées"></i> #calories#
-        <i class="fa fa-arrows-h" title="Distance parcourue"></i> #distance# Km
-        <i class="fa fa-arrows-v" title="Elévation"></i> #elevation# m
+        <span class="heart"><i class="fa fa-heart"></i> #measuregrps11# bpm<span class="measuregrps54"> /  #measuregrps54# %</span></span><br/>
+        <span class="step"><i class="icon loisir-runner5" title="Nombre de pas"></i> #step#</span>
+        <span class="calories"><i class="icon nourriture-cherries" title="Calories brulées"></i> #calories#</span>
+        <span class="distance"><i class="fa fa-arrows-h" title="Distance parcourue"></i> #distance# Km</span>
+        <span class="elevation"><i class="fa fa-arrows-v" title="Elévation"></i> #elevation# m</span>
     </center>
 
     <script>
-        var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
-        $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + (totalSleep % 60));
-        $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').css('width', (parseInt('#durationtosleep#') / totalSleep * 100) + '%');
-        $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').css('width', (parseInt('#deepsleepduration#') / totalSleep * 100) + '%');
-        $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').css('width', (parseInt('#lightsleepduration#') / totalSleep * 100) + '%');
-
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').css('width', (parseInt('#measuregrps8#') / parseInt('#measuregrps1#') * 100) + '%');
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').css('width', (parseInt('#measuregrps5#') / parseInt('#measuregrps1#') * 100) + '%');
+        if (isNaN(parseInt('#durationtosleep#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .sleep').remove();
+        } else {
+            var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
+            var minute  = (totalSleep % 60);
+            minute= minute.toString()
+            if(minute.length == 1){
+               minute = '0'+minute; 
+            }
+            $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + minute);
+            $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').css('width', (parseInt('#durationtosleep#') / totalSleep * 100) + '%');
+            $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').css('width', (parseInt('#deepsleepduration#') / totalSleep * 100) + '%');
+            $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').css('width', (parseInt('#lightsleepduration#') / totalSleep * 100) + '%');
+        }
+        if (isNaN(parseInt('#measuregrps1#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .body').remove();
+        } else {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').css('width', (parseInt('#measuregrps8#') / parseInt('#measuregrps1#') * 100) + '%');
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').css('width', (parseInt('#measuregrps5#') / parseInt('#measuregrps1#') * 100) + '%');
+            var weightOther = parseInt('#measuregrps1#') - (parseInt('#measuregrps5#') + parseInt('#measuregrps8#'));
+            if (weightOther > 0) {
+                $('.eqLogic[data-eqLogic_id=#id#] .weightOther').attr('title', 'Autre : ' + weightOther + ' kg');
+                $('.eqLogic[data-eqLogic_id=#id#] .weightOther').css('width', (weightOther / parseInt('#measuregrps1#') * 100) + '%');
+            }
+        }
+         if (isNaN(parseInt('#measuregrps14#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
+        }
+        if (isNaN(parseInt('#measuregrps11#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
+        }
+        if (isNaN(parseInt('#step#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
+        }
+        if (isNaN(parseInt('#calorie#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .calorie').remove();
+        }
+        if (isNaN(parseInt('#distance#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
+        }
+        if (isNaN(parseInt('#elevation#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
+        }
     </script>
 
 </div>
