@@ -25,7 +25,7 @@ function withings_install() {
     $cron = cron::byClassAndFunction('withings', 'pull');
     if (!is_object($cron)) {
         $cron = new cron();
-        $cron->setClass('withing');
+        $cron->setClass('withings');
         $cron->setFunction('pull');
         $cron->setEnable(1);
         $cron->setSchedule('*/30 * * * *');
@@ -37,7 +37,7 @@ function withings_update() {
     $cron = cron::byClassAndFunction('withings', 'pull');
     if (!is_object($cron)) {
         $cron = new cron();
-        $cron->setClass('withing');
+        $cron->setClass('withings');
         $cron->setFunction('pull');
         $cron->setEnable(1);
         $cron->setSchedule('*/30 * * * *');
