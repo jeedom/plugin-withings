@@ -47,6 +47,9 @@ class withings extends eqLogic {
     /*     * *********************Methode d'instance************************* */
 
     public function linkToUser() {
+        if (!class_exists('OAuth')) {
+            throw new Exception('Classe OAuth non trouvée merci de l\'installer : "sudo apt-get update;sudo apt-get install -y php5-dev;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart"');
+        }
         @session_start();
         $_SESSION['withings_Session'] = 0;
         $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
@@ -54,6 +57,9 @@ class withings extends eqLogic {
     }
 
     public function getWithings() {
+        if (!class_exists('OAuth')) {
+            throw new Exception('Classe OAuth non trouvée merci de l\'installer : "sudo apt-get update;sudo apt-get install -y php5-dev;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart"');
+        }
         $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
         $withings->setOAuthDetails($this->getConfiguration('token'), $this->getConfiguration('secret'));
         return $withings;
