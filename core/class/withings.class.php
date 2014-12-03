@@ -22,6 +22,7 @@ require_once dirname(__FILE__) . '/../../core/php/withings.inc.php';
 class withings extends eqLogic {
     /*     * *************************Attributs****************************** */
 
+    private $_collectDate = '';
 
     /*     * ***********************Methode static*************************** */
 
@@ -92,6 +93,7 @@ class withings extends eqLogic {
             '#id#' => $this->getId(),
             '#background_color#' => $this->getBackgroundColor($_version),
             '#eqLink#' => $this->getLinkToConfiguration(),
+            '#collectDate#' => $this->getCollectDate(),
         );
 
         foreach ($this->getCmd() as $cmd) {
@@ -459,12 +461,22 @@ class withings extends eqLogic {
         $mc->remove();
         $mc = cache::byKey('withingsWidgetdashboard' . $this->getId());
         $mc->remove();
+        $this->setCollectDate(date('Y-m-d H:i:s'));
         $this->toHtml('mobile');
         $this->toHtml('dashboard');
         $this->refreshWidget();
     }
 
     /*     * **********************Getteur Setteur*************************** */
+
+    public function getCollectDate() {
+        return $this->_collectDate;
+    }
+
+    public function setCollectDate($_collectDate) {
+        $this->_collectDate = $_collectDate;
+    }
+
 }
 
 class withingsCmd extends cmd {
