@@ -4,9 +4,9 @@
     <div class="row sleep">
         <div class="col-sm-6" style="margin-left: 10px;" >
             <div class="progress">
-                <div class="progress-bar progress-bar-striped durationtosleep" title="Temps pour s'endormir : #durationtosleep# min"></div>
-                <div class="progress-bar progress-bar-warning progress-bar-striped lightsleepduration" title='Durée sommeil léger : #lightsleepduration# min'></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped deepsleepduration"  title='Durée sommeil profond : #deepsleepduration# min'></div>
+                <div class="progress-bar progress-bar-striped durationtosleep"></div>
+                <div class="progress-bar progress-bar-warning progress-bar-striped lightsleepduration" ></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped deepsleepduration" ></div>
             </div>
         </div>
         <div class="col-sm-5">
@@ -46,8 +46,30 @@
                 minute = '0' + minute;
             }
             $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + minute);
+
+            var minute = (parseInt('#durationtosleep#') % 60);
+            minute = minute.toString()
+            if (minute.length == 1) {
+                minute = '0' + minute;
+            }
+            $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').attr('title', 'Temps pour s\'endormir : ' + parseInt(parseInt('#durationtosleep#') / 60) + 'h' + minute);
             $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').css('width', (parseInt('#durationtosleep#') / totalSleep * 100) + '%');
+
+            var minute = (parseInt('#deepsleepduration#') % 60);
+            minute = minute.toString()
+            if (minute.length == 1) {
+                minute = '0' + minute;
+            }
+            $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').attr('title', 'Durée sommeil léger : ' + parseInt(parseInt('#deepsleepduration#') / 60) + 'h' + minute);
             $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').css('width', (parseInt('#deepsleepduration#') / totalSleep * 100) + '%');
+
+            var minute = (parseInt('#lightsleepduration#') % 60);
+            minute = minute.toString()
+            if (minute.length == 1) {
+                minute = '0' + minute;
+            }
+            $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').attr('title', 'Durée sommeil profond : ' + parseInt(parseInt('#lightsleepduration#') / 60) + 'h' + minute);
+
             $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').css('width', (parseInt('#lightsleepduration#') / totalSleep * 100) + '%');
         }
         if (isNaN(parseInt('#measuregrps1#'))) {
@@ -70,8 +92,8 @@
         if (isNaN(parseInt('#step#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
         }
-        if (isNaN(parseInt('#calorie#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .calorie').remove();
+        if (isNaN(parseInt('#calories#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .calories').remove();
         }
         if (isNaN(parseInt('#distance#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
