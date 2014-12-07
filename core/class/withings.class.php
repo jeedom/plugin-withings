@@ -99,12 +99,12 @@ class withings extends eqLogic {
             '#id#' => $this->getId(),
             '#background_color#' => $this->getBackgroundColor($_version),
             '#eqLink#' => $this->getLinkToConfiguration(),
-            '#collectDate#' => $this->getCollectDate(),
         );
 
         foreach ($this->getCmd() as $cmd) {
             if ($cmd->getIsVisible() == 1) {
                 $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
+                $replace['#' . $cmd->getLogicalId() . '_collect#'] = $cmd->getCollectDate();
             } else {
                 $replace['#' . $cmd->getLogicalId() . '#'] = '';
             }
@@ -375,7 +375,7 @@ class withings extends eqLogic {
         $step = $this->getCmd(null, 'step');
         if (is_object($step)) {
             if (isset($activity['body']['steps']) && $step->execCmd() != $step->formatValue($activity['body']['steps'])) {
-                $step->setCollectDate('');
+                $step->setCollectDate($activity['body']['date']);
                 $step->event($activity['body']['steps']);
             }
         }
