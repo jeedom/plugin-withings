@@ -23,7 +23,7 @@ $('#bt_linkToUser').on('click', function () {
         url: "plugins/withings/core/ajax/withings.ajax.php", // url du fichier php
         data: {
             action: "linkToUser",
-            id : $('.eqLogic .eqLogicAttr[data-l1key=id]').value()
+            id: $('.eqLogic .eqLogicAttr[data-l1key=id]').value()
         },
         dataType: 'json',
         error: function (request, status, error) {
@@ -60,6 +60,7 @@ function addCmdToTable(_cmd) {
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" style="display : none;">';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="subType" style="display : none;">';
     if (is_numeric(_cmd.id)) {
+        tr += '<a class="btn btn-default btn-xs cmdAction expertModeVisible" data-action="configure"><i class="fa fa-cogs"></i></a> ';
         tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
     }
     tr += '<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
