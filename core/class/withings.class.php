@@ -92,7 +92,7 @@ class withings extends eqLogic {
         $_version = jeedom::versionAlias($_version);
         $mc = cache::byKey('withingsWidget' . $_version . $this->getId());
         if ($mc->getValue() != '') {
-            return $mc->getValue();
+            //return $mc->getValue();
         }
         $replace = array(
             '#name#' => $this->getName(),
@@ -101,7 +101,7 @@ class withings extends eqLogic {
             '#eqLink#' => $this->getLinkToConfiguration(),
         );
 
-        foreach ($this->getCmd() as $cmd) {
+        foreach ($this->getCmd('info') as $cmd) {
             if ($cmd->getIsVisible() == 1) {
                 $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
                 $replace['#' . $cmd->getLogicalId() . '_collect#'] = $cmd->getCollectDate();
@@ -109,6 +109,10 @@ class withings extends eqLogic {
                 $replace['#' . $cmd->getLogicalId() . '#'] = '';
             }
         }
+
+        $refresh = $this->getCmd(null, 'refresh');
+        $replace['#refresh_id#'] = $refresh->getId();
+
         $parameters = $this->getDisplay('parameters');
         if (is_array($parameters)) {
             foreach ($parameters as $key => $value) {
@@ -137,6 +141,18 @@ class withings extends eqLogic {
         $step->setEventOnly(1);
         $step->setEqLogic_id($this->getId());
         $step->save();
+
+        $refresh = $this->getCmd(null, 'refresh');
+        if (!is_object($refresh)) {
+            $refresh = new withingsCmd();
+            $refresh->setLogicalId('refresh');
+            $refresh->setIsVisible(1);
+            $refresh->setName(__('Rafraîhir', __FILE__));
+        }
+        $refresh->setType('action');
+        $refresh->setSubType('other');
+        $refresh->setEqLogic_id($this->getId());
+        $refresh->save();
 
         $distance = $this->getCmd(null, 'distance');
         if (!is_object($distance)) {
@@ -446,7 +462,7 @@ class withings extends eqLogic {
             }
         }
 
-        $body = $this->getBody();
+        $body = $this->getBody(date('Y-m-d'));
         if (isset($body['body']['measuregrps'][0]['measures'])) {
             foreach ($body['body']['measuregrps'][0]['measures'] as $measure) {
                 $cmd = $this->getCmd(null, 'measuregrps' . $measure['type']);
@@ -495,7 +511,11 @@ class withingsCmd extends cmd {
     /*     * *********************Methode d'instance************************* */
 
     public function execute($_options = null) {
-        return '';
+        if ($this->getType() == '') {
+            return '';
+        }
+        $eqLogic = $this->getEqlogic();
+        $eqLogic->syncWithWithings();
     }
 
     /*     * **********************Getteur Setteur*************************** */

@@ -44,6 +44,10 @@ function withings_update() {
         $cron->save();
     }
     $cron->stop();
+
+    foreach (withings::byType('withings') as $withings) {
+        $withings->save();
+    }
 }
 
 function withings_remove() {
