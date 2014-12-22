@@ -388,6 +388,7 @@ class withings extends eqLogic {
 
     public function syncWithWithings() {
         $activity = $this->getActivity(date('Y-m-d'));
+        log::add('withings', 'debug', 'Activity : ' . print_r($activity, true));
         $step = $this->getCmd(null, 'step');
         if (is_object($step)) {
             if (isset($activity['body']['steps']) && $step->execCmd() != $step->formatValue($activity['body']['steps'])) {
