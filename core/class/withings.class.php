@@ -392,7 +392,7 @@ class withings extends eqLogic {
         $step = $this->getCmd(null, 'step');
         if (is_object($step)) {
             if (isset($activity['body']['steps']) && $step->execCmd() != $step->formatValue($activity['body']['steps'])) {
-                $step->setCollectDate($activity['body']['date']);
+                $step->setCollectDate('');
                 $step->event($activity['body']['steps']);
             }
         }
