@@ -1,4 +1,5 @@
 <?php
+
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
@@ -12,10 +13,10 @@ if (!is_object($eqLogic)) {
     exit();
 }
 $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-$withings->initSession(withings::getCallbackUri() . '?eqLogic_id=' . $eqLogic->getId());
+$withings->initSession(config::byKey('externalAddr') . '/plugins/fitbit/core/php/callback.php?eqLogic_id=' . $eqLogic->getId());
 $eqLogic->setConfiguration('userid', $_GET['userid']);
 $eqLogic->setConfiguration('token', $_SESSION['withings_Token']);
 $eqLogic->setConfiguration('secret', $_SESSION['withings_Secret']);
 $eqLogic->save();
 
-redirect(withings::getCallbackUri('/index.php?v=d&p=withings&m=withings&id=' . $eqLogic->getId()));
+redirect(config::byKey('externalAddr') . '/index.php?v=d&p=withings&m=withings&id=' . $eqLogic->getId());

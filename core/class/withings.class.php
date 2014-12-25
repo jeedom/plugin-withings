@@ -34,16 +34,6 @@ class withings extends eqLogic {
         }
     }
 
-    public static function getCallbackUri($_arg = '/plugins/withings/core/php/callback.php') {
-        $url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        if (strpos($url, '/plugins') !== false) {
-            $url = substr($url, 0, strpos($url, '/plugins'));
-        } else {
-            $url = substr($url, 0, strpos($url, '/index.php'));
-        }
-        return $url . $_arg;
-    }
-
     /*     * *********************Methode d'instance************************* */
 
     public function linkToUser() {
@@ -53,7 +43,7 @@ class withings extends eqLogic {
         @session_start();
         $_SESSION['withings_Session'] = 0;
         $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-        return $withings->initSession(self::getCallbackUri() . '?eqLogic_id=' . $this->getId());
+        return $withings->initSession(config::byKey('externalAddr') . '/plugins/withings/core/php/callback.php?eqLogic_id=' . $this->getId());
     }
 
     public function getWithings() {
