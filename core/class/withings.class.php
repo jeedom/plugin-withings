@@ -464,6 +464,7 @@ class withings extends eqLogic {
         }
 
         $body = $this->getBody(date('Y-m-d'));
+        log::add('withings', 'debug', print_r($body));
         if (isset($body['body']['measuregrps'][0]['measures'])) {
             foreach ($body['body']['measuregrps'][0]['measures'] as $measure) {
                 $cmd = $this->getCmd(null, 'measuregrps' . $measure['type']);
