@@ -82,14 +82,14 @@ class withings extends eqLogic {
         $_version = jeedom::versionAlias($_version);
         $mc = cache::byKey('withingsWidget' . $_version . $this->getId());
         if ($mc->getValue() != '') {
-            //return $mc->getValue();
+            return $mc->getValue();
         }
         $replace = array(
             '#name#' => $this->getName(),
             '#id#' => $this->getId(),
             '#background_color#' => $this->getBackgroundColor($_version),
             '#eqLink#' => $this->getLinkToConfiguration(),
-        );
+            );
 
         foreach ($this->getCmd('info') as $cmd) {
             if ($cmd->getIsVisible() == 1) {
@@ -454,18 +454,23 @@ class withings extends eqLogic {
         }
 
         $body = $this->getBody(date('Y-m-d'));
-        log::add('withings', 'debug', print_r($body, true));
+        $foundMeasure = array();
         if (isset($body['body']['measuregrps'][0]['measures'])) {
-            foreach ($body['body']['measuregrps'][0]['measures'] as $measure) {
-                $cmd = $this->getCmd(null, 'measuregrps' . $measure['type']);
-                if (is_object($cmd)) {
-                    $value = round($measure['value'], 2);
-                    if ($measure['type'] == 1 || $measure['type'] == 5 || $measure['type'] == 6 || $measure['type'] == 8) {
-                        $value = round($value / 1000, 2);
-                    }
-                    if ($cmd->execCmd() != $cmd->formatValue($value)) {
-                        $cmd->setCollectDate('');
-                        $cmd->event($value);
+            foreach ($body['body']['measuregrps'] as $measures) {
+                foreach ($measures['measures'] as $measure) {
+                    if(!isset($foundMeasure[$measure['type']])){
+                        $foundMeasure[$measure['type']] = true;
+                        $cmd = $this->getCmd(null, 'measuregrps' . $measure['type']);
+                        if (is_object($cmd)) {
+                            $value = round($measure['value'], 2);
+                            if ($measure['type'] == 1 || $measure['type'] == 5 || $measure['type'] == 6 || $measure['type'] == 8) {
+                                $value = round($value / 1000, 2);
+                            }
+                            if ($cmd->execCmd() != $cmd->formatValue($value)) {
+                                $cmd->setCollectDate('');
+                                $cmd->event($value);
+                            }
+                        }
                     }
                 }
             }

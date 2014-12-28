@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
-    echo 'Vous ne pouvez appeller cette page sans être connecté. Veuillez vous connecter <a href=' . withings::getCallbackUri('/index.php') . '>ici</a> avant et refaire l\'opération de synchronisation';
+    echo 'Vous ne pouvez appeller cette page sans être connecté. Veuillez vous connecter <a href=' . config::byKey('externalAddr') . '/index.php>ici</a> avant et refaire l\'opération de synchronisation';
     die();
 }
 require_once dirname(__FILE__) . '/withings.inc.php';
