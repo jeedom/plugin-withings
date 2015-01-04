@@ -43,7 +43,7 @@ class withings extends eqLogic {
         @session_start();
         $_SESSION['withings_Session'] = 0;
         $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-        return $withings->initSession(config::byKey('externalAddr') . '/plugins/withings/core/php/callback.php?eqLogic_id=' . $this->getId());
+        return $withings->initSession(config::byKey('externalProtocol') .config::byKey('externalAddr').':' .config::byKey('externalPort').config::byKey('externalComplement') . '/plugins/withings/core/php/callback.php?eqLogic_id=' . $this->getId());
     }
 
     public function getWithings() {

@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
-    echo 'Vous ne pouvez appeller cette page sans être connecté. Veuillez vous connecter <a href=' . config::byKey('externalAddr') . '/index.php>ici</a> avant et refaire l\'opération de synchronisation';
+    echo 'Vous ne pouvez appeller cette page sans être connecté. Veuillez vous connecter <a href=' . config::byKey('externalProtocol') .config::byKey('externalAddr').':' .config::byKey('externalPort').config::byKey('externalComplement') . '/index.php>ici</a> avant et refaire l\'opération de synchronisation';
     die();
 }
 require_once dirname(__FILE__) . '/withings.inc.php';
@@ -13,7 +13,7 @@ if (!is_object($eqLogic)) {
     exit();
 }
 $withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-$withings->initSession(config::byKey('externalAddr') . '/plugins/fitbit/core/php/callback.php?eqLogic_id=' . $eqLogic->getId());
+$withings->initSession(config::byKey('externalProtocol') .config::byKey('externalAddr').':' .config::byKey('externalPort').config::byKey('externalComplement') . '/plugins/fitbit/core/php/callback.php?eqLogic_id=' . $eqLogic->getId());
 $eqLogic->setConfiguration('userid', $_GET['userid']);
 $eqLogic->setConfiguration('token', $_SESSION['withings_Token']);
 $eqLogic->setConfiguration('secret', $_SESSION['withings_Secret']);
