@@ -19,4 +19,4 @@ $eqLogic->setConfiguration('token', $_SESSION['withings_Token']);
 $eqLogic->setConfiguration('secret', $_SESSION['withings_Secret']);
 $eqLogic->save();
 
-redirect(config::byKey('externalAddr') . '/index.php?v=d&p=withings&m=withings&id=' . $eqLogic->getId());
+redirect(config::byKey('externalProtocol') .config::byKey('externalAddr').':' .config::byKey('externalPort').config::byKey('externalComplement') . '/index.php?v=d&p=withings&m=withings&id=' . $eqLogic->getId());
