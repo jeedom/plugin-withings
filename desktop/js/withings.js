@@ -62,7 +62,7 @@
         }
 
         $('#div_alert').showAlert({message: 'Mode push actif', level: 'success'});
-        
+        printEqLogic({id : $('.eqLogic .eqLogicAttr[data-l1key=id]').value()});
     }
 });
 });
@@ -87,6 +87,7 @@
             return;
         }
         $('#div_alert').showAlert({message: 'Mode push inactif', level: 'success'});
+        printEqLogic({id : $('.eqLogic .eqLogicAttr[data-l1key=id]').value()});
     }
 });
 });
