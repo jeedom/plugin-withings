@@ -15,9 +15,9 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+ $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
-$('#bt_linkToUser').on('click', function () {
+ $('#bt_linkToUser').on('click', function () {
     $.ajax({// fonction permettant de faire de l'ajax
         type: "POST", // methode de transmission des données au fichier php
         url: "plugins/withings/core/ajax/withings.ajax.php", // url du fichier php
@@ -30,25 +30,25 @@ $('#bt_linkToUser').on('click', function () {
             handleAjaxError(request, status, error);
         },
         success: function (data) { // si l'appel a bien fonctionné
-            if (data.state != 'ok') {
-                $('#div_alert').showAlert({message: data.result, level: 'danger'});
-                return;
-            }
-            if (isset(data.result.redirect)) {
-                window.location.href = data.result.redirect;
-            } else {
-                $('#div_alert').showAlert({message: 'Synchronisation réussie', level: 'success'});
-            }
+        if (data.state != 'ok') {
+            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+            return;
         }
-    });
+        if (isset(data.result.redirect)) {
+            window.location.href = data.result.redirect;
+        } else {
+            $('#div_alert').showAlert({message: 'Synchronisation réussie', level: 'success'});
+        }
+    }
+});
 });
 
-$('#bt_registerCallback').on('click', function () {
+ $('#bt_registerNotification').on('click', function () {
     $.ajax({// fonction permettant de faire de l'ajax
         type: "POST", // methode de transmission des données au fichier php
         url: "plugins/withings/core/ajax/withings.ajax.php", // url du fichier php
         data: {
-            action: "registerCallback",
+            action: "registerNotification",
             id: $('.eqLogic .eqLogicAttr[data-l1key=id]').value()
         },
         dataType: 'json',
@@ -56,18 +56,76 @@ $('#bt_registerCallback').on('click', function () {
             handleAjaxError(request, status, error);
         },
         success: function (data) { // si l'appel a bien fonctionné
-            if (data.state != 'ok') {
-                $('#div_alert').showAlert({message: data.result, level: 'danger'});
-                return;
-            }
-            if (isset(data.result.redirect)) {
-                window.location.href = data.result.redirect;
-            } else {
-                $('#div_alert').showAlert({message: 'Mode push actif', level: 'success'});
+        if (data.state != 'ok') {
+            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+            return;
+        }
+
+        $('#div_alert').showAlert({message: 'Mode push actif', level: 'success'});
+        
+    }
+});
+});
+
+  $('#bt_revokeNotification').on('click', function () {
+    var el = $(this);
+    $.ajax({// fonction permettant de faire de l'ajax
+        type: "POST", // methode de transmission des données au fichier php
+        url: "plugins/withings/core/ajax/withings.ajax.php", // url du fichier php
+        data: {
+            action: "revokeNotification",
+            id: $('.eqLogic .eqLogicAttr[data-l1key=id]').value(),
+            callback: el.attr('data-callbackurl')
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) { // si l'appel a bien fonctionné
+        if (data.state != 'ok') {
+            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+            return;
+        }
+        $('#div_alert').showAlert({message: 'Mode push inactif', level: 'success'});
+    }
+});
+});
+
+ function printEqLogic(_data){
+ $.ajax({// fonction permettant de faire de l'ajax
+        type: "POST", // methode de transmission des données au fichier php
+        url: "plugins/withings/core/ajax/withings.ajax.php", // url du fichier php
+        data: {
+            action: "listNotification",
+            id:_data.id
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) { // si l'appel a bien fonctionné
+        if (data.state != 'ok') {
+            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+            return;
+        }
+        var found = false;
+        var profiles = data.result.body.profiles;
+        for(var i in profiles){
+            if(profiles[i].comment == 'Jeedom'){
+                found = true;
+                $('#bt_revokeNotification').attr('data-callbackurl',profiles[i].callbackurl)
             }
         }
-    });
+        if(found){
+            $('#bt_registerNotification').hide();
+            $('#bt_revokeNotification').show();
+        }else{
+           $('#bt_registerNotification').show();
+           $('#bt_revokeNotification').hide();
+       }
+   }
 });
+}
 
 
 function addCmdToTable(_cmd) {

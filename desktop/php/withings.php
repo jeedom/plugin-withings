@@ -93,7 +93,8 @@ foreach (object::all() as $object) {
                  <div class="form-group">
                     <label class="col-lg-3 control-label">{{Mode push}}</label>
                     <div class="col-lg-2">
-                        <a class="btn btn-default" id="bt_registerCallback"><i class='fa fa-share'></i> {{Activer}}</a>
+                        <a class="btn btn-success" id="bt_registerNotification"><i class='fa fa-share'></i> {{Activer}}</a>
+                        <a class="btn btn-danger" id="bt_revokeNotification"><i class='fa fa-times'></i> {{Désactiver}}</a>
                     </div>
                     <div class="alert alert-info col-lg-7">
                         {{Nécessite de pouvoir accéder à jeedom de l'exterieur et d'avoir bien configuré la partie reseaux dans jeedom}}

@@ -33,13 +33,31 @@ try {
 		ajax::success(array('redirect' => $eqLogic->linkToUser()));
 	}
 
-	if (init('action') == 'registerCallback') {
+	if (init('action') == 'registerNotification') {
 		$eqLogic = eqLogic::byId(init('id'));
 		if (!is_object($eqLogic)) {
 			throw new Exception(__('EqLogic non trouvé : ', __FILE__) . init('id'));
 		}
 
-		ajax::success($eqLogic->registerCallback());
+		ajax::success($eqLogic->registerNotification());
+	}
+
+	if (init('action') == 'listNotification') {
+		$eqLogic = eqLogic::byId(init('id'));
+		if (!is_object($eqLogic)) {
+			throw new Exception(__('EqLogic non trouvé : ', __FILE__) . init('id'));
+		}
+
+		ajax::success($eqLogic->listNotification());
+	}
+
+	if (init('action') == 'revokeNotification') {
+		$eqLogic = eqLogic::byId(init('id'));
+		if (!is_object($eqLogic)) {
+			throw new Exception(__('EqLogic non trouvé : ', __FILE__) . init('id'));
+		}
+
+		ajax::success($eqLogic->revokeNotification(init('callback')));
 	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));

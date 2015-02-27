@@ -36,10 +36,20 @@ class withings extends eqLogic {
 
 	/*     * *********************Methode d'instance************************* */
 
-	public function registerCallback() {
+	public function registerNotification() {
 		$callback = config::byKey('externalProtocol') . config::byKey('externalAddr') . ':' . config::byKey('externalPort') . config::byKey('externalComplement') . '/plugins/fitbit/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . config::byKey('api');
 		$withings = $this->getWithings();
-		return $withings->doRequest('notify?action=subscribe&userid=' . $this->getConfiguration('userid') . '&callback=' . urlencode($callback) . '&comment=Jeedom');
+		return $withings->doRequest('notify?action=subscribe&userid=' . $this->getConfiguration('userid') . '&callbackurl=' . urlencode($callback) . '&comment=Jeedom');
+	}
+
+	public function listNotification() {
+		$withings = $this->getWithings();
+		return $withings->doRequest('notify?action=list');
+	}
+
+	public function revokeNotification($_callback) {
+		$withings = $this->getWithings();
+		return $withings->doRequest('notify?action=revoke&userid=' . $this->getConfiguration('userid') . '&callbackurl=' . urlencode($_callback));
 	}
 
 	public function linkToUser() {
