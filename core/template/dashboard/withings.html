@@ -32,7 +32,8 @@
     </div>
 
     <center>
-        <span class="heart"><span title="Rythme cardiaque (#measuregrps11_collect#)"><i class="fa fa-heart"></i> #measuregrps11# bpm</span><span class="measuregrps54" title="SPO2 (#measuregrps54_collect#)"> /  #measuregrps54# %</span></span><br/>
+        <span class="heart"><span title="Rythme cardiaque (#measuregrps11_collect#)"><i class="fa fa-heart"></i> #measuregrps11# bpm</span>
+        <span class="measuregrps54" title="SPO2 (#measuregrps54_collect#)">  #measuregrps54# %</span></span><br/>
         <span class="step" title="Nombre de pas (#step_collect#)"><i class="icon loisir-runner5"></i> #step#</span>
         <span class="calories" title="Calories brulées (#calories_collect#)"><i class="icon nourriture-cherries"></i> #calories#</span>
         <span class="distance" title="Distance parcourue (#distance_collect#)"><i class="fa fa-arrows-h"></i> #distance# Km</span>
@@ -109,6 +110,9 @@
         }
         if (isNaN(parseInt('#elevation#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
+        }
+        if (isNaN(parseInt('#measuregrps54#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
         }
     </script>
 
