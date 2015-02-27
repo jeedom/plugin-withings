@@ -36,6 +36,12 @@ class withings extends eqLogic {
 
 	/*     * *********************Methode d'instance************************* */
 
+	public function registerCallback() {
+		$callback = config::byKey('externalProtocol') . config::byKey('externalAddr') . ':' . config::byKey('externalPort') . config::byKey('externalComplement') . '/plugins/fitbit/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . config::byKey('api');
+		$withings = $this->getWithings();
+		return $withings->doRequest('notify?action=subscribe&userid=' . $this->getConfiguration('userid') . '&callback=' . urlencode($callback) . '&comment=Jeedom');
+	}
+
 	public function linkToUser() {
 		if (!class_exists('OAuth')) {
 			throw new Exception('Classe OAuth non trouvée merci de l\'installer : "sudo apt-get update;sudo apt-get install -y php5-dev;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart"');

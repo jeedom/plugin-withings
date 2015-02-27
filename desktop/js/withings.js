@@ -43,6 +43,32 @@ $('#bt_linkToUser').on('click', function () {
     });
 });
 
+$('#bt_registerCallback').on('click', function () {
+    $.ajax({// fonction permettant de faire de l'ajax
+        type: "POST", // methode de transmission des données au fichier php
+        url: "plugins/withings/core/ajax/withings.ajax.php", // url du fichier php
+        data: {
+            action: "registerCallback",
+            id: $('.eqLogic .eqLogicAttr[data-l1key=id]').value()
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) { // si l'appel a bien fonctionné
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+            if (isset(data.result.redirect)) {
+                window.location.href = data.result.redirect;
+            } else {
+                $('#div_alert').showAlert({message: 'Mode push actif', level: 'success'});
+            }
+        }
+    });
+});
+
 
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
