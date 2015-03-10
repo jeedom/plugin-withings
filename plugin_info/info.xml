@@ -6,7 +6,7 @@
     <icon>icon loisir-exercise1</icon>
     <licence>AGPL</licence>
     <author>Loïc Gevrey</author>
-    <installation>Aucune</installation>
+    <installation>Vérifiez bien que vous avez correctement configuré la partie Générale -> Administaction -> Configuration puis reseaux, en effet il faut lors de l'association de Jeedom au compte Withings que votre Jeedom soit accessible de l'exterieur (ensuite cela n'est plus nécessaire)</installation>
     <require>1.136</require>
     <version>1.0</version>
     <category>health</category>
