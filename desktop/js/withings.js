@@ -67,7 +67,7 @@
 });
 });
 
-  $('#bt_revokeNotification').on('click', function () {
+ $('#bt_revokeNotification').on('click', function () {
     var el = $(this);
     $.ajax({// fonction permettant de faire de l'ajax
         type: "POST", // methode de transmission des données au fichier php
@@ -110,21 +110,23 @@
             return;
         }
         var found = false;
-        var profiles = data.result.body.profiles;
-        for(var i in profiles){
-            if(profiles[i].comment == 'Jeedom'){
-                found = true;
-                $('#bt_revokeNotification').attr('data-callbackurl',profiles[i].callbackurl)
+        if(isset(data.result.body) && isset(data.result.body.profiles)){
+            var profiles = data.result.body.profiles;
+            for(var i in profiles){
+                if(profiles[i].comment == 'Jeedom'){
+                    found = true;
+                    $('#bt_revokeNotification').attr('data-callbackurl',profiles[i].callbackurl)
+                }
             }
-        }
-        if(found){
-            $('#bt_registerNotification').hide();
-            $('#bt_revokeNotification').show();
-        }else{
-           $('#bt_registerNotification').show();
-           $('#bt_revokeNotification').hide();
-       }
-   }
+            if(found){
+                $('#bt_registerNotification').hide();
+                $('#bt_revokeNotification').show();
+            }else{
+             $('#bt_registerNotification').show();
+             $('#bt_revokeNotification').hide();
+         }
+     }
+ }
 });
 }
 
