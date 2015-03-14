@@ -1,0 +1,16 @@
+== Withings
+
+=== Description
+Plugin pour appareils Withings
+
+'''
+=== Configuration
+include::configuration.asciidoc[]
+
+'''
+=== FAQ
+include::faq.asciidoc[]
+
+'''
+=== Changelog
+include::changelog.asciidoc[]
