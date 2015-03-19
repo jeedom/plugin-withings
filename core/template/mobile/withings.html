@@ -3,7 +3,8 @@
     <center>
         <span class="sleep"><i class="icon personne-sleeping4"></i> <span class="totalSleep"></span> <i class="icon divers-circular114"></i> #wakeupcount#<br/></span>
         <span class="body"><i class="icon divers-weight11"></i> #measuregrps1# kg</span>
-        <span class="heart"><i class="fa fa-heart"></i> #measuregrps11# bpm / #measuregrps54# %<br/></span>
+        <span class="heart"><i class="fa fa-heart"></i> #measuregrps11# bpm</span>
+        <span class="measuregrps54" title="SPO2 (#measuregrps54_collect#)">  #measuregrps54# %</span></span><br/>
         <span class="step"><i class="icon loisir-runner5" title="Nombre de pas"></i> #step#</span>
         <span class="calories"><i class="icon nourriture-cherries" title="Calories brulées"></i> #calories#</span>
         <span class="distance"><i class="fa fa-arrows-h" title="Distance parcourue"></i> #distance# Km</span>
@@ -38,6 +39,9 @@
         }
         if (isNaN(parseInt('#elevation#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
+        }
+        if (isNaN(parseInt('#measuregrps54#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
         }
     </script>
 
