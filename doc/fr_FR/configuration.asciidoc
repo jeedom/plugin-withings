@@ -52,6 +52,7 @@ image::../images/withings-7.JPG[]
 ** Afficher : permet de la rendre visible ou non sur le dashboard
 ** Avancée (petites roues crantés) : permet d'afficher la configuration avancée de la commande
 ** Tester : permet de tester la commande pour voir sa valeur
+** Supprimer (bouton "-") : pour supprimer la commande
 
 Voici le resultat sur le dashboard : 
 
