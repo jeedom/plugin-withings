@@ -109,6 +109,8 @@
             $('#div_alert').showAlert({message: data.result, level: 'danger'});
             return;
         }
+        $('#bt_registerNotification').hide();
+        $('#bt_revokeNotification').hide();
         var found = false;
         if(isset(data.result.body) && isset(data.result.body.profiles)){
             var profiles = data.result.body.profiles;

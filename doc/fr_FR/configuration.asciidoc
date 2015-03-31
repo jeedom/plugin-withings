@@ -1,1 +1,58 @@
-image::../images/withings_icon.png[]
+Une fois le plugin Wihtings installé aller sur :
+
+image::../images/withings-1.JPG[]
+
+==== Création d'un équipement et association au compte Withings
+
+Cliquez sur ajouter une personne pour ajouter quelqu'un : 
+
+image::../images/withings-2.JPG[]
+
+Donnez un nom à cette personne (cet équipement) et validez : 
+
+image::../images/withings-3.JPG[]
+
+Vous devez ensuite avoir cette page : 
+
+image::../images/withings-4.JPG[]
+
+[icon="../images/plugin/important.png"]
+[IMPORTANT]
+Le premier truc a verifier est "URL de retour" celle-ci doit etre valide et accessible de l'exterieure sinon vous ne pourrez pas associer Jeedom a votre compte Withings. Si ce n'est pas le cas, mettez à jour vos parametre de configuration réseaux dans Générale -> Administration -> Configuration puis partie reseaux, voir link:http://doc.jeedom.fr/fr_FR/core.html#administration[ici]
+
+[icon="../images/plugin/tip.png"]
+[TIP]
+On peut voir ici que l'équipement n'est lié a aucun équipement car il n'y a pas de bouton en face du "Mode push"
+
+Cliquez sur "Lier à un utilisateur" pour lier cet équipement à votre compte Withings : 
+
+image::../images/withings-5.JPG[]
+
+Connectez vous a votre compte Withings, puis validez la demande d'autorisation : 
+
+image::../images/withings-6.JPG[]
+
+Si vous obtenez une page blanche ou une erreur c'est que votre configuration reseaux n'est pas bonne, sinon vous devez retomber sur cette page (vous remarquerez que cette fois il y a un bouton activer en face de "Mode push") : 
+
+image::../images/withings-7.JPG[]
+
+
+==== Configuration
+
+Voici les détails de la configuration du plugin : 
+
+image::../images/withings-7.JPG[]
+
+* Nom de la personne : nom de l'équipement Withings
+* Objet parent : nom de l'objet auquel ratacher l'équipement
+* Activer/Visible : permet d'activer l'équipement (ne pas oublier de le faire sinon vous n'aurez aucune données) et de le rendre visible sur le dashboard
+* Mode push : une fois activer permet à Jeedom de recevoir en temps réel les informations de Wihtings (par defaut il peut y aovir jusqu'a 30min de délai). Attention activer ce mode necessite d'avoir bien configurer la partie réseau et de maniere durable !!!
+* pour chaque commandes : 
+** historiser : permet d'historiser la commande
+** Afficher : permet de la rendre visible ou non sur le dashboard
+** Avancée (petites roues crantés) : permet d'afficher la configuration avancée de la commande
+** Tester : permet de tester la commande pour voir sa valeur
+
+Voici le resultat sur le dashboard : 
+
+image::../images/withings-8.JPG[]
