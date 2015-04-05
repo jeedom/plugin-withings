@@ -37,7 +37,7 @@ class withings extends eqLogic {
 	/*     * *********************Methode d'instance************************* */
 
 	public function registerNotification() {
-		$callback = config::byKey('externalProtocol') . config::byKey('externalAddr') . ':' . config::byKey('externalPort') . config::byKey('externalComplement') . '/plugins/withings/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . config::byKey('api');
+		$callback = network::getNetworkAccess() . '/plugins/withings/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . config::byKey('api');
 		$withings = $this->getWithings();
 		return $withings->doRequest('notify?action=subscribe&userid=' . $this->getConfiguration('userid') . '&callbackurl=' . urlencode($callback) . '&comment=Jeedom');
 	}
@@ -59,7 +59,7 @@ class withings extends eqLogic {
 		@session_start();
 		$_SESSION['withings_Session'] = 0;
 		$withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-		return $withings->initSession(config::byKey('externalProtocol') . config::byKey('externalAddr') . ':' . config::byKey('externalPort') . config::byKey('externalComplement') . '/plugins/withings/core/php/callback.php?eqLogic_id=' . $this->getId());
+		return $withings->initSession(network::getNetworkAccess() . '/plugins/withings/core/php/callback.php?eqLogic_id=' . $this->getId());
 	}
 
 	public function getWithings() {

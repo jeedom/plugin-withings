@@ -81,7 +81,7 @@ foreach (object::all() as $object) {
                 <div class="form-group">
                     <label class="col-lg-3 control-label">{{URL de retour}}</label>
                     <div class="col-lg-4">
-                        <span><?php echo config::byKey('externalProtocol') . config::byKey('externalAddr') . ':' . config::byKey('externalPort') . config::byKey('externalComplement') . '/plugins/withings/core/php/callback.php';?></span>
+                        <span><?php echo network::getNetworkAccess() . '/plugins/withings/core/php/callback.php';?></span>
                     </div>
                 </div>
                 <div class="form-group">
