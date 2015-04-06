@@ -37,7 +37,7 @@ class withings extends eqLogic {
 	/*     * *********************Methode d'instance************************* */
 
 	public function registerNotification() {
-		$callback = network::getNetworkAccess() . '/plugins/withings/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . config::byKey('api');
+		$callback = network::getNetworkAccess('external') . '/plugins/withings/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . config::byKey('api');
 		$withings = $this->getWithings();
 		return $withings->doRequest('notify?action=subscribe&userid=' . $this->getConfiguration('userid') . '&callbackurl=' . urlencode($callback) . '&comment=Jeedom');
 	}
