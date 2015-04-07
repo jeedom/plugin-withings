@@ -8,22 +8,23 @@
     <div class="row sleep">
         <div class="col-sm-6" style="margin-left: 10px;" >
             <div class="progress">
-                <div class="progress-bar progress-bar-striped durationtosleep"></div>
-                <div class="progress-bar progress-bar-warning progress-bar-striped lightsleepduration" ></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped deepsleepduration" ></div>
+                <div class="progress-bar progress-bar-striped durationtosleep #durationtosleep_history#" data-cmd_id="#durationtosleep_id#"></div>
+                <div class="progress-bar progress-bar-warning progress-bar-striped lightsleepduration #lightsleepduration_history#" data-cmd_id="#lightsleepduration_id#"></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped deepsleepduration #deepsleepduration_history#" data-cmd_id="#deepsleepduration_id#"></div>
             </div>
         </div>
         <div class="col-sm-5">
-            <i class="icon personne-sleeping4"></i> <span class="totalSleep" title="Temps total de sommeil"></span> <span title="Nombre de reveils (#wakeupcount_collect#)"><i class="icon divers-circular114"></i> #wakeupcount#</span>
+            <i class="icon personne-sleeping4"></i> <span class="totalSleep #totalSleep_history#" data-cmd_id="#totalSleep_id#" title="Temps total de sommeil"></span> 
+            <span class="#wakeupcount_history#" data-cmd_id="#wakeupcount_id#" title="Nombre de reveils (#wakeupcount_collect#)"><i class="icon divers-circular114"></i> #wakeupcount#</span>
         </div>
     </div>
 
     <div class="row body">
         <div class="col-sm-6" style="margin-left: 10px;" >
             <div class="progress">
-                <div class="progress-bar progress-bar-danger progress-bar-striped measuregrps8" title="Masse grasse : #measuregrps8# kg (#measuregrps8_collect#)"></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped measuregrps5" title='Masse maigre : #measuregrps5# kg (#measuregrps5_collect#)'></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped weightOther" title='Autre : 0 kg'></div>
+                <div class="progress-bar progress-bar-danger progress-bar-striped measuregrps8 #measuregrps8_history#" data-cmd_id="#measuregrps8_id#" title="Masse grasse : #measuregrps8# kg (#measuregrps8_collect#)"></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped measuregrps5 #measuregrps5_history#" data-cmd_id="#measuregrps5_id#" title='Masse maigre : #measuregrps5# kg (#measuregrps5_collect#)'></div>
+                <div class="progress-bar progress-bar-success progress-bar-striped weightOther #weightOther_history#" data-cmd_id="#weightOther_id#" title='Autre : 0 kg'></div>
             </div>
         </div>
         <div class="col-sm-5">
