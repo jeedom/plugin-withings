@@ -95,6 +95,9 @@ class withings extends eqLogic {
 		if ($this->getIsEnable() != 1) {
 			return '';
 		}
+		if (!$this->hasRight('r')) {
+			return '';
+		}
 		$_version = jeedom::versionAlias($_version);
 		$mc = cache::byKey('withingsWidget' . $_version . $this->getId());
 		if ($mc->getValue() != '') {
