@@ -8,6 +8,10 @@ Cliquez sur ajouter une personne pour ajouter quelqu'un :
 
 image::../images/withings-2.JPG[]
 
+[icon="../images/plugin/tip.png"]
+[TIP]
+Comme à beaucoup d'endroit sur Jeedom, mettre la souris tout à gauche permet de faire apparaître un menu d'accès rapide (vous pouvez à partir de votre profils le laisser toujours visible)
+
 Donnez un nom à cette personne (cet équipement) et validez : 
 
 image::../images/withings-3.JPG[]
