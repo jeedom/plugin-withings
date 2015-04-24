@@ -21,6 +21,7 @@
             if (minute.length == 1) {
                 minute = '0' + minute;
             }
+            $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + minute);
         }
         if (isNaN(parseInt('#measuregrps1#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .body').remove();
