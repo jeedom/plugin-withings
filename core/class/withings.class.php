@@ -29,7 +29,21 @@ class withings extends eqLogic {
 	public static function pull() {
 		foreach (self::byType('withings') as $withings) {
 			if ($withings->getIsEnable() == 1) {
-				$withings->syncWithWithings();
+				try {
+					$withings->syncWithWithings();
+					if ($withings->getConfiguration('withingNumberFailed', 0) > 0) {
+						$withings->setConfiguration('withingNumberFailed', 0);
+						$withings->save();
+					}
+				} catch (Exception $e) {
+					if ($withings->getConfiguration('withingNumberFailed', 0) > 3) {
+						throw $e;
+					} else {
+						$withings->setConfiguration('withingNumberFailed', $withings->getConfiguration('withingNumberFailed', 0) + 1);
+						$withings->save();
+					}
+				}
+
 			}
 		}
 	}
