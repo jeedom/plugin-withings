@@ -43,7 +43,6 @@ class withings extends eqLogic {
 						$withings->save();
 					}
 				}
-
 			}
 		}
 	}
