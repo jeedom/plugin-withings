@@ -37,7 +37,7 @@ class withings extends eqLogic {
 					}
 				} catch (Exception $e) {
 					if ($withings->getConfiguration('withingNumberFailed', 0) > 3) {
-						throw $e;
+						log::add('withings', 'error', $e->getMessage());
 					} else {
 						$withings->setConfiguration('withingNumberFailed', $withings->getConfiguration('withingNumberFailed', 0) + 1);
 						$withings->save();
