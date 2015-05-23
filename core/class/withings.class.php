@@ -410,7 +410,6 @@ class withings extends eqLogic {
 
 	public function syncWithWithings() {
 		$activity = $this->getActivity(date('Y-m-d'));
-		log::add('withings', 'debug', 'Activity : ' . print_r($activity, true));
 		$step = $this->getCmd(null, 'step');
 		if (is_object($step)) {
 			if (isset($activity['body']['steps']) && $step->execCmd() != $step->formatValue($activity['body']['steps'])) {
@@ -444,7 +443,6 @@ class withings extends eqLogic {
 		}
 
 		$sleepSummary = $this->getSleepSummary(date('Y-m-d', strtotime('-1 days')), date('Y-m-d', strtotime('-1 days')));
-		log::add('withings', 'debug', 'SleepSummary : ' . print_r($sleepSummary, true));
 
 		$wakeupduration = $this->getCmd(null, 'wakeupduration');
 		if (is_object($wakeupduration)) {
@@ -487,7 +485,6 @@ class withings extends eqLogic {
 		}
 
 		$body = $this->getBody(date('Y-m-d'));
-		log::add('withings', 'debug', 'body : ' . print_r($body, true));
 		$foundMeasure = array();
 		if (isset($body['body']['measuregrps'][0]['measures'])) {
 			foreach ($body['body']['measuregrps'] as $measures) {
