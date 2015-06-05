@@ -2,7 +2,7 @@ Une fois le plugin Wihtings installé et activé allez sur :
 
 image::../images/withings-1.JPG[]
 
-=== Création d'un équipement et association au compte Withings
+=== Création d'un équipement
 
 Cliquez sur ajouter une personne pour ajouter quelqu'un : 
 
