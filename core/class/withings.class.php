@@ -37,7 +37,7 @@ class withings extends eqLogic {
 					}
 				} catch (Exception $e) {
 					if ($withings->getConfiguration('withingNumberFailed', 0) > 3) {
-						log::add('withings', 'error', __('Erreur sur ', __FILE__) . $withings->getHumanName() . ' : ' . $e->getMessage());
+						log::add('withings', 'error', __('Erreur sur ', __FILE__) . $withings->getHumanName() . ' (' . $withings->getConfiguration('withingNumberFailed', 0) . ') : ' . $e->getMessage());
 					} else {
 						$withings->setConfiguration('withingNumberFailed', $withings->getConfiguration('withingNumberFailed', 0) + 1);
 						$withings->save();
