@@ -404,8 +404,11 @@ class withings extends eqLogic {
 		$measuregrps54->setEventOnly(1);
 		$measuregrps54->setEqLogic_id($this->getId());
 		$measuregrps54->save();
+		try {
+			$this->syncWithWithings();
+		} catch (Exception $e) {
 
-		$this->syncWithWithings();
+		}
 	}
 
 	public function syncWithWithings() {
