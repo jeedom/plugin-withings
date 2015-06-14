@@ -120,7 +120,7 @@ class withings extends eqLogic {
 			'#name#' => $this->getName(),
 			'#id#' => $this->getId(),
 			'#background_color#' => $this->getBackgroundColor($_version),
-			'#eqLink#' => $this->getLinkToConfiguration(),
+			'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
 		);
 
 		foreach ($this->getCmd('info') as $cmd) {
