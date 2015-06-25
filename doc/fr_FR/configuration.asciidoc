@@ -22,7 +22,7 @@ image::../images/withings-4.JPG[]
 
 [icon="../images/plugin/important.png"]
 [IMPORTANT]
-Le premier truc à verifier est "URL de retour". Celle-ci doit être validée et accessible de l'extérieure sinon vous ne pourrez pas associer Jeedom a votre compte Withings. Si ce n'est pas le cas, mettez à jour vos paramètres de configuration réseau dans Général -> Administration -> Configuration puis partie "réseaux", voir link:http://doc.jeedom.fr/fr_FR/core.html#administration[ici]
+Le premier truc à verifier est "URL de retour". Celle-ci doit être validée et accessible de l'extérieure sinon vous ne pourrez pas associer Jeedom a votre compte Withings. Si ce n'est pas le cas, mettez à jour vos paramètres de configuration réseau dans Général -> Administration -> Configuration puis partie "réseaux", voir https://www.jeedom.fr/doc/documentation/core/fr_FR/doc-core-administration.html.html#administration[ici]
 
 [icon="../images/plugin/tip.png"]
 [TIP]
