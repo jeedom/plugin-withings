@@ -2,13 +2,12 @@ Une fois le plugin Wihtings installé et activé allez sur :
 
 image::../images/withings-1.JPG[]
 
-=== Création d'un équipement
+== Création d'un équipement
 
 Cliquez sur ajouter une personne pour ajouter quelqu'un : 
 
 image::../images/withings-2.JPG[]
 
-[icon="../images/plugin/tip.png"]
 [TIP]
 Comme à beaucoup d'endroit sur Jeedom, mettre la souris tout à gauche permet de faire apparaître un menu d'accès rapide (vous pouvez à partir de votre profils le laisser toujours visible)
 
@@ -20,11 +19,9 @@ Vous devez ensuite avoir cette page :
 
 image::../images/withings-4.JPG[]
 
-[icon="../images/plugin/important.png"]
 [IMPORTANT]
 Le premier truc à verifier est "URL de retour". Celle-ci doit être validée et accessible de l'extérieure sinon vous ne pourrez pas associer Jeedom a votre compte Withings. Si ce n'est pas le cas, mettez à jour vos paramètres de configuration réseau dans Général -> Administration -> Configuration puis partie "réseaux", voir https://www.jeedom.fr/doc/documentation/core/fr_FR/doc-core-administration.html.html#administration[ici]
 
-[icon="../images/plugin/tip.png"]
 [TIP]
 On peut voir ici que l'équipement n'est lié à aucun équipement car il n'y a pas de bouton en face du "Mode push".
 
@@ -41,7 +38,7 @@ Si vous obtenez une page blanche ou une erreur, c'est que votre configuration r�
 image::../images/withings-7.JPG[]
 
 
-=== Configuration
+== Configuration
 
 Voici les détails de la configuration du plugin : 
 
@@ -58,6 +55,10 @@ image::../images/withings-7.JPG[]
 ** Tester : permet de tester la commande pour voir sa valeur
 ** Supprimer (bouton "-") : pour supprimer la commande
 
-Voici le résultat sur le dashboard : 
+== Widget
+
+Voici le widget : 
 
 image::../images/withings-8.JPG[]
+
+

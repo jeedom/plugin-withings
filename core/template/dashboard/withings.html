@@ -5,117 +5,66 @@
 
     <span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
 
-    <div class="row sleep">
-        <div class="col-sm-6" style="margin-left: 10px;" >
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped durationtosleep #durationtosleep_history#" data-cmd_id="#durationtosleep_id#"></div>
-                <div class="progress-bar progress-bar-warning progress-bar-striped lightsleepduration #lightsleepduration_history#" data-cmd_id="#lightsleepduration_id#"></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped deepsleepduration #deepsleepduration_history#" data-cmd_id="#deepsleepduration_id#"></div>
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <i class="icon personne-sleeping4"></i> <span class="totalSleep #totalSleep_history#" data-cmd_id="#totalSleep_id#" title="Temps total de sommeil"></span> 
-            <span class="#wakeupcount_history#" data-cmd_id="#wakeupcount_id#" title="Nombre de reveils (#wakeupcount_collect#)"><i class="icon divers-circular114"></i> #wakeupcount#</span>
-        </div>
-    </div>
+    <div class="row" style="margin-left : 2px;margin-right : 2px;">
+       <div class="col-sm-4" style="padding-right : 5px;padding-left : 5px;">
+           <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Sommeil</legend>
+           <span class="#deepsleepduration_history#" data-cmd_id="#deepsleepduration_id#">Profond <strong class="tooltips" title="#deepsleepduration_collect#" style="font-size:1.1em;">#deepsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+           <span class="#lightsleepduration_history#" data-cmd_id="#lightsleepduration_id#">Léger <strong class="tooltips" title="#lightsleepduration_collect#" style="font-size:1.1em;">#lightsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+           <span class="#durationtosleep_history#" data-cmd_id="#durationtosleep_id#">Endormis <strong class="tooltips" title="#durationtosleep_collect#" style="font-size:1.1em;">#durationtosleep#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+           <span class="#wakeupcount_history#" data-cmd_id="#wakeupcount_id#">Reveil <strong class="tooltips" title="#wakeupcount_collect#" style="font-size:1.1em;">#wakeupcount#</strong> ( <strong class="tooltips" title="#wakeupduration_collect#" style="font-size:1.1em;">#wakeupduration#</strong> <span style="font-size:0.8em;">min</span> )</span>
+       </div>
+       <div class="col-sm-4" style="padding-right : 3px;padding-left : 3px;">
+           <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Activité</legend>
+           <span class="step #step_history#" data-cmd_id="#step_id#">Pas <strong class="tooltips" title="#step_collect#" style="font-size:1.1em;">#step#</strong></span><br/>
+           <span class="caloriesOut #calories_history#" data-cmd_id="#calories_id#">Calories <strong class="tooltips" title="#calories_collect#" style="font-size:1.1em;">#calories#</strong><br/></span>
+           <span class="distance #distance_history#" data-cmd_id="#distance_id#">Distance <strong class="tooltips" title="#distance_collect#" style="font-size:1.1em;">#distance#</strong> <span style="font-size:0.8em;">Km</span><br/></span>
+           <span class="elevation #elevation_history#" data-cmd_id="#elevation_id#">Hauteur <strong class="tooltips" title="#elevation_collect#" style="font-size:1.1em;">#elevation#</strong> <span style="font-size:0.8em;">m</span></span>
+       </div>
+       <div class="col-sm-4" style="padding-right : 5px;padding-left : 5px;">
+           <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Mesure</legend>
+           <span class="measuregrps1 #measuregrps1_history#" data-cmd_id="#measuregrps1_id#">Poids <strong class="tooltips" title="#measuregrps1_collect#" style="font-size:1.1em;">#measuregrps1#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+           <span class="measuregrps8 #measuregrps8_history#" data-cmd_id="#measuregrps8_id#">Grasse <strong class="tooltips" title="#measuregrps8_collect#" style="font-size:1.1em;">#measuregrps8#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+           <span class="measuregrps5 #measuregrps1_history#" data-cmd_id="#measuregrps5_id#">Maigre <strong class="tooltips" title="#measuregrps5_collect#" style="font-size:1.1em;">#measuregrps5#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+           <span class="measuregrps11 #measuregrps11_history#" data-cmd_id="#measuregrps11_id#">Coeur <strong class="tooltips" title="#measuregrps11_collect#" style="font-size:1.1em;">#measuregrps11#</strong> <span style="font-size:0.8em;">bpm</span><br/></span>
+           <span class="measuregrps54 #measuregrps54_history#" data-cmd_id="#measuregrps54_id#">SPO2 <strong class="tooltips" title="#measuregrps54_collect#" style="font-size:1.1em;">#measuregrps54#</strong> <span style="font-size:0.8em;">%</span></span>
+       </div>
+   </div>
 
-    <div class="row body">
-        <div class="col-sm-6" style="margin-left: 10px;" >
-            <div class="progress">
-                <div class="progress-bar progress-bar-danger progress-bar-striped measuregrps8 #measuregrps8_history#" data-cmd_id="#measuregrps8_id#" title="Masse grasse : #measuregrps8# kg (#measuregrps8_collect#)"></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped measuregrps5 #measuregrps5_history#" data-cmd_id="#measuregrps5_id#" title='Masse maigre : #measuregrps5# kg (#measuregrps5_collect#)'></div>
-                <div class="progress-bar progress-bar-success progress-bar-striped weightOther #weightOther_history#" data-cmd_id="#weightOther_id#" title='Autre : 0 kg'></div>
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <span class="#measuregrps1_history#" data-cmd_id="#measuregrps1_id#" title="Poids (#measuregrps1_collect#)"><i class="icon divers-weight11"></i> #measuregrps1# kg</span>
-        </div>
-    </div>
-
-    <center>
-        <span class="heart #measuregrps11_history#" data-cmd_id="#measuregrps11_id#"><span title="Rythme cardiaque (#measuregrps11_collect#)"><i class="fa fa-heart"></i> #measuregrps11# bpm</span>
-        <span class="measuregrps54 #measuregrps54_history#" data-cmd_id="#measuregrps11_id#" title="SPO2 (#measuregrps54_collect#)">  #measuregrps54# %</span></span><br/>
-        <span class="step #step_history#" data-cmd_id="#step_id#" title="Nombre de pas (#step_collect#)"><i class="icon loisir-runner5"></i> #step#</span>
-        <span class="calories #calories_history#" data-cmd_id="#calories_id#" title="Calories brulées (#calories_collect#)"><i class="icon nourriture-cherries"></i> #calories#</span>
-        <span class="distance #distance_history#" data-cmd_id="#distance_id#" title="Distance parcourue (#distance_collect#)"><i class="fa fa-arrows-h"></i> #distance# Km</span>
-        <span class="elevation #elevation_history#" data-cmd_id="#elevation_id#" title="Elévation (#elevation_collect#)"><i class="fa fa-arrows-v"></i> #elevation# m</span>
-    </center>
-
-    <script>
-        $('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
-            jeedom.cmd.execute({id: '#refresh_id#'});
-        });
-
-
-        if (isNaN(parseInt('#durationtosleep#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .sleep').remove();
-        } else {
-            var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
-            var minute = (totalSleep % 60);
-            minute = minute.toString()
-            if (minute.length == 1) {
-                minute = '0' + minute;
-            }
-            $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + minute);
-
-            var minute = (parseInt('#durationtosleep#') % 60);
-            minute = minute.toString()
-            if (minute.length == 1) {
-                minute = '0' + minute;
-            }
-            $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').attr('title', 'Temps pour s\'endormir : ' + parseInt(parseInt('#durationtosleep#') / 60) + 'h' + minute + ' (#durationtosleep_collect#)');
-            $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').css('width', (parseInt('#durationtosleep#') / totalSleep * 100) + '%');
-
-            var minute = (parseInt('#deepsleepduration#') % 60);
-            minute = minute.toString()
-            if (minute.length == 1) {
-                minute = '0' + minute;
-            }
-            $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').attr('title', 'Durée sommeil profond : ' + parseInt(parseInt('#deepsleepduration#') / 60) + 'h' + minute + ' (#deepsleepduration_collect#)');
-            $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').css('width', (parseInt('#deepsleepduration#') / totalSleep * 100) + '%');
-
-            var minute = (parseInt('#lightsleepduration#') % 60);
-            minute = minute.toString()
-            if (minute.length == 1) {
-                minute = '0' + minute;
-            }
-            $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').attr('title', 'Durée sommeil léger : ' + parseInt(parseInt('#lightsleepduration#') / 60) + 'h' + minute + ' (#lightsleepduration_collect#)');
-
-            $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').css('width', (parseInt('#lightsleepduration#') / totalSleep * 100) + '%');
-        }
-        if (isNaN(parseInt('#measuregrps1#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .body').remove();
-        } else {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').css('width', (parseInt('#measuregrps8#') / parseInt('#measuregrps1#') * 100) + '%');
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').css('width', (parseInt('#measuregrps5#') / parseInt('#measuregrps1#') * 100) + '%');
-            var weightOther = parseInt('#measuregrps1#') - (parseInt('#measuregrps5#') + parseInt('#measuregrps8#'));
-            if (weightOther > 0) {
-                $('.eqLogic[data-eqLogic_id=#id#] .weightOther').attr('title', 'Autre : ' + weightOther + ' kg');
-                $('.eqLogic[data-eqLogic_id=#id#] .weightOther').css('width', (weightOther / parseInt('#measuregrps1#') * 100) + '%');
-            }
-        }
-        if (isNaN(parseInt('#measuregrps14#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
-        }
-        if (isNaN(parseInt('#measuregrps11#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
-        }
-        if (isNaN(parseInt('#step#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
-        }
-        if (isNaN(parseInt('#calories#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .calories').remove();
-        }
-        if (isNaN(parseInt('#distance#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
-        }
-        if (isNaN(parseInt('#elevation#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
-        }
-        if (isNaN(parseInt('#measuregrps54#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
-        }
-    </script>
+   <script>
+    $('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
+        jeedom.cmd.execute({id: '#refresh_id#'});
+    });
+    if (isNaN(parseInt('#measuregrps1#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps1').remove();
+    }
+     if (isNaN(parseInt('#measuregrps8#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').remove();
+    }
+     if (isNaN(parseInt('#measuregrps5#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').remove();
+    }
+    if (isNaN(parseInt('#measuregrps14#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
+    }
+    if (isNaN(parseInt('#measuregrps11#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
+    }
+    if (isNaN(parseInt('#step#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
+    }
+    if (isNaN(parseInt('#calories#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .calories').remove();
+    }
+    if (isNaN(parseInt('#distance#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
+    }
+    if (isNaN(parseInt('#elevation#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
+    }
+    if (isNaN(parseInt('#measuregrps54#'))) {
+        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
+    }
+</script>
 
 </div>
 
