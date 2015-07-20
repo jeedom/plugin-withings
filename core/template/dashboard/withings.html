@@ -1,69 +1,84 @@
 <div class="eqLogic-widget eqLogic noResize" style="width: 330px;background-color: #background_color#; padding : 0px; #style#" data-eqLogic_id="#id#" data-version="dashboard" >
-    <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
-    <i class='fa fa-refresh pull-right cursor refresh' style="margin-top: 3px;margin-right: 3px;"></i>
-    <center><a href="#eqLink#" style="font-size : 1.5em;"> #name# </a></center>
+  <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
+  <i class='fa fa-refresh pull-right cursor refresh' style="margin-top: 3px;margin-right: 3px;"></i>
+  <center><a href="#eqLink#" style="font-size : 1.5em;"> #name# </a></center>
 
-    <span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
+  <span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
 
-    <div class="row" style="margin-left : 2px;margin-right : 2px;">
-       <div class="col-sm-4" style="padding-right : 5px;padding-left : 5px;">
-           <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Sommeil</legend>
-           <span class="#deepsleepduration_history#" data-cmd_id="#deepsleepduration_id#">Profond <strong class="tooltips" title="#deepsleepduration_collect#" style="font-size:1.1em;">#deepsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
-           <span class="#lightsleepduration_history#" data-cmd_id="#lightsleepduration_id#">Léger <strong class="tooltips" title="#lightsleepduration_collect#" style="font-size:1.1em;">#lightsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
-           <span class="#durationtosleep_history#" data-cmd_id="#durationtosleep_id#">Endormis <strong class="tooltips" title="#durationtosleep_collect#" style="font-size:1.1em;">#durationtosleep#</strong> <span style="font-size:0.8em;">min</span><br/></span>
-           <span class="#wakeupcount_history#" data-cmd_id="#wakeupcount_id#">Reveil <strong class="tooltips" title="#wakeupcount_collect#" style="font-size:1.1em;">#wakeupcount#</strong> ( <strong class="tooltips" title="#wakeupduration_collect#" style="font-size:1.1em;">#wakeupduration#</strong> <span style="font-size:0.8em;">min</span> )</span>
-       </div>
-       <div class="col-sm-4" style="padding-right : 3px;padding-left : 3px;">
-           <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Activité</legend>
-           <span class="step #step_history#" data-cmd_id="#step_id#">Pas <strong class="tooltips" title="#step_collect#" style="font-size:1.1em;">#step#</strong><br/></span>
-           <span class="caloriesOut #calories_history#" data-cmd_id="#calories_id#">Calories <strong class="tooltips" title="#calories_collect#" style="font-size:1.1em;">#calories#</strong><br/></span>
-           <span class="distance #distance_history#" data-cmd_id="#distance_id#">Distance <strong class="tooltips" title="#distance_collect#" style="font-size:1.1em;">#distance#</strong> <span style="font-size:0.8em;">Km</span><br/></span>
-           <span class="elevation #elevation_history#" data-cmd_id="#elevation_id#">Hauteur <strong class="tooltips" title="#elevation_collect#" style="font-size:1.1em;">#elevation#</strong> <span style="font-size:0.8em;">m</span></span>
-       </div>
-       <div class="col-sm-4" style="padding-right : 5px;padding-left : 5px;">
-           <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Mesure</legend>
-           <span class="measuregrps1 #measuregrps1_history#" data-cmd_id="#measuregrps1_id#">Poids <strong class="tooltips" title="#measuregrps1_collect#" style="font-size:1.1em;">#measuregrps1#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
-           <span class="measuregrps8 #measuregrps8_history#" data-cmd_id="#measuregrps8_id#">Grasse <strong class="tooltips" title="#measuregrps8_collect#" style="font-size:1.1em;">#measuregrps8#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
-           <span class="measuregrps5 #measuregrps1_history#" data-cmd_id="#measuregrps5_id#">Maigre <strong class="tooltips" title="#measuregrps5_collect#" style="font-size:1.1em;">#measuregrps5#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
-           <span class="measuregrps11 #measuregrps11_history#" data-cmd_id="#measuregrps11_id#">Coeur <strong class="tooltips" title="#measuregrps11_collect#" style="font-size:1.1em;">#measuregrps11#</strong> <span style="font-size:0.8em;">bpm</span><br/></span>
-           <span class="measuregrps54 #measuregrps54_history#" data-cmd_id="#measuregrps54_id#">SPO2 <strong class="tooltips" title="#measuregrps54_collect#" style="font-size:1.1em;">#measuregrps54#</strong> <span style="font-size:0.8em;">%</span></span>
-       </div>
+  <div class="row" style="margin-left : 2px;margin-right : 2px;">
+   <div class="col-sm-4" style="padding-right : 5px;padding-left : 5px;">
+     <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Sommeil</legend>
+     <span class="#deepsleepduration_history# deepsleepduration" data-cmd_id="#deepsleepduration_id#">Profond <strong class="tooltips" title="#deepsleepduration_collect#" style="font-size:1.1em;">#deepsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+     <span class="#lightsleepduration_history# lightsleepduration" data-cmd_id="#lightsleepduration_id#">Léger <strong class="tooltips" title="#lightsleepduration_collect#" style="font-size:1.1em;">#lightsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+     <span class="#durationtosleep_history# durationtosleep" data-cmd_id="#durationtosleep_id#">Endormis <strong class="tooltips" title="#durationtosleep_collect#" style="font-size:1.1em;">#durationtosleep#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+     <span class="#wakeupcount_history# wakeupduration" data-cmd_id="#wakeupcount_id#">Reveil <strong class="tooltips" title="#wakeupcount_collect#" style="font-size:1.1em;">#wakeupcount#</strong> ( <strong class="tooltips" title="#wakeupduration_collect#" style="font-size:1.1em;">#wakeupduration#</strong> <span style="font-size:0.8em;">min</span> )</span>
    </div>
+   <div class="col-sm-4" style="padding-right : 3px;padding-left : 3px;">
+     <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Activité</legend>
+     <span class="step #step_history#" data-cmd_id="#step_id#">Pas <strong class="tooltips" title="#step_collect#" style="font-size:1.1em;">#step#</strong><br/></span>
+     <span class="calories #calories_history#" data-cmd_id="#calories_id#">Calories <strong class="tooltips" title="#calories_collect#" style="font-size:1.1em;">#calories#</strong><br/></span>
+     <span class="distance #distance_history#" data-cmd_id="#distance_id#">Distance <strong class="tooltips" title="#distance_collect#" style="font-size:1.1em;">#distance#</strong> <span style="font-size:0.8em;">Km</span><br/></span>
+     <span class="elevation #elevation_history#" data-cmd_id="#elevation_id#">Hauteur <strong class="tooltips" title="#elevation_collect#" style="font-size:1.1em;">#elevation#</strong> <span style="font-size:0.8em;">m</span></span>
+   </div>
+   <div class="col-sm-4" style="padding-right : 5px;padding-left : 5px;">
+     <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;">Mesure</legend>
+     <span class="measuregrps1 #measuregrps1_history#" data-cmd_id="#measuregrps1_id#">Poids <strong class="tooltips" title="#measuregrps1_collect#" style="font-size:1.1em;">#measuregrps1#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+     <span class="measuregrps8 #measuregrps8_history#" data-cmd_id="#measuregrps8_id#">Grasse <strong class="tooltips" title="#measuregrps8_collect#" style="font-size:1.1em;">#measuregrps8#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+     <span class="measuregrps5 #measuregrps1_history#" data-cmd_id="#measuregrps5_id#">Maigre <strong class="tooltips" title="#measuregrps5_collect#" style="font-size:1.1em;">#measuregrps5#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+     <span class="measuregrps11 #measuregrps11_history#" data-cmd_id="#measuregrps11_id#">Coeur <strong class="tooltips" title="#measuregrps11_collect#" style="font-size:1.1em;">#measuregrps11#</strong> <span style="font-size:0.8em;">bpm</span><br/></span>
+     <span class="measuregrps54 #measuregrps54_history#" data-cmd_id="#measuregrps54_id#">SPO2 <strong class="tooltips" title="#measuregrps54_collect#" style="font-size:1.1em;">#measuregrps54#</strong> <span style="font-size:0.8em;">%</span></span>
+   </div>
+ </div>
 
-   <script>
-    $('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
-        jeedom.cmd.execute({id: '#refresh_id#'});
-    });
-    if (isNaN(parseInt('#measuregrps1#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps1').remove();
-    }
-     if (isNaN(parseInt('#measuregrps8#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').remove();
-    }
-     if (isNaN(parseInt('#measuregrps5#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').remove();
-    }
-    if (isNaN(parseInt('#measuregrps14#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
-    }
-    if (isNaN(parseInt('#measuregrps11#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
-    }
-    if (isNaN(parseInt('#step#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
-    }
-    if (isNaN(parseInt('#calories#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .calories').remove();
-    }
-    if (isNaN(parseInt('#distance#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
-    }
-    if (isNaN(parseInt('#elevation#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
-    }
-    if (isNaN(parseInt('#measuregrps54#'))) {
-        $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
-    }
+ <script>
+  $('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
+    jeedom.cmd.execute({id: '#refresh_id#'});
+  });
+  if (isNaN(parseInt('#deepsleepduration#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .deepsleepduration').remove();
+  }
+  if (isNaN(parseInt('#lightsleepduration#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .lightsleepduration').remove();
+  }
+  if (isNaN(parseInt('#durationtosleep#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .durationtosleep').remove();
+  }
+  if (isNaN(parseInt('#wakeupduration#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .wakeupduration').remove();
+  }
+   if (isNaN(parseInt('#calories#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .calories').remove();
+  }
+  if (isNaN(parseInt('#measuregrps1#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .measuregrps1').remove();
+  }
+  if (isNaN(parseInt('#measuregrps8#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').remove();
+  }
+  if (isNaN(parseInt('#measuregrps5#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').remove();
+  }
+  if (isNaN(parseInt('#measuregrps14#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
+  }
+  if (isNaN(parseInt('#measuregrps11#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
+  }
+  if (isNaN(parseInt('#step#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
+  }
+  if (isNaN(parseInt('#calories#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .calories').remove();
+  }
+  if (isNaN(parseInt('#distance#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
+  }
+  if (isNaN(parseInt('#elevation#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
+  }
+  if (isNaN(parseInt('#measuregrps54#'))) {
+    $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
+  }
 </script>
 
 </div>
