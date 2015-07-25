@@ -114,12 +114,12 @@ class withings extends eqLogic {
 		$_version = jeedom::versionAlias($_version);
 		$mc = cache::byKey('withingsWidget' . $_version . $this->getId());
 		if ($mc->getValue() != '') {
-			return $mc->getValue();
+			//return $mc->getValue();
 		}
 		$replace = array(
 			'#name#' => $this->getName(),
 			'#id#' => $this->getId(),
-			'#background_color#' => $this->getBackgroundColor($_version),
+			'#background_color#' => '#009ee3',
 			'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
 		);
 

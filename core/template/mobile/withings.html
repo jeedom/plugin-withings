@@ -1,30 +1,46 @@
-<div class="eqLogic-widget eqLogic" style="background-color: #background_color#; #style#" data-eqLogic_id="#id#" data-version="mobile" >
-    <center>#name#</center>
-    <center>
-        <span class="sleep"><i class="icon personne-sleeping4"></i> <span class="totalSleep"></span> <i class="icon divers-circular114"></i> #wakeupcount#<br/></span>
-        <span class="body"><i class="icon divers-weight11"></i> #measuregrps1# kg</span>
-        <span class="heart"><i class="fa fa-heart"></i> #measuregrps11# bpm</span>
-        <span class="measuregrps54" title="SPO2 (#measuregrps54_collect#)">  #measuregrps54# %</span></span><br/>
-        <span class="step"><i class="icon loisir-runner5" title="Nombre de pas"></i> #step#</span>
-        <span class="calories"><i class="icon nourriture-cherries" title="Calories brulées"></i> #calories#</span>
-        <span class="distance"><i class="fa fa-arrows-h" title="Distance parcourue"></i> #distance# Km</span>
-        <span class="elevation"><i class="fa fa-arrows-v" title="Elévation"></i> #elevation# m</span>
-    </center>
+<div class="eqLogic-widget eqLogic" style="background-color: #background_color#; padding : 0px; #style#;padding-left:3px;" data-eqLogic_id="#id#" data-version="mobile" >
+    <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
+    <i class='fa fa-refresh pull-right cursor refresh' style="margin-top: 3px;margin-right: 3px;"></i>
+    <center style="font-size : 1.5em;">#name#</center>
+
+    <span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
+
+
+    <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;width:90%">Sommeil</legend>
+    <span class="#deepsleepduration_history#" data-cmd_id="#deepsleepduration_id#">Profond <strong class="tooltips" title="#deepsleepduration_collect#" style="font-size:1.1em;">#deepsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+    <span class="#lightsleepduration_history#" data-cmd_id="#lightsleepduration_id#">Léger <strong class="tooltips" title="#lightsleepduration_collect#" style="font-size:1.1em;">#lightsleepduration#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+    <span class="#durationtosleep_history#" data-cmd_id="#durationtosleep_id#">Endormis <strong class="tooltips" title="#durationtosleep_collect#" style="font-size:1.1em;">#durationtosleep#</strong> <span style="font-size:0.8em;">min</span><br/></span>
+    <span class="#wakeupcount_history#" data-cmd_id="#wakeupcount_id#">Reveil <strong class="tooltips" title="#wakeupcount_collect#" style="font-size:1.1em;">#wakeupcount#</strong> ( <strong class="tooltips" title="#wakeupduration_collect#" style="font-size:1.1em;">#wakeupduration#</strong> <span style="font-size:0.8em;">min</span> )</span>
+
+    <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;width:90%">Activité</legend>
+    <span class="step #step_history#" data-cmd_id="#step_id#">Pas <strong class="tooltips" title="#step_collect#" style="font-size:1.1em;">#step#</strong><br/></span>
+    <span class="caloriesOut #calories_history#" data-cmd_id="#calories_id#">Calories <strong class="tooltips" title="#calories_collect#" style="font-size:1.1em;">#calories#</strong><br/></span>
+    <span class="distance #distance_history#" data-cmd_id="#distance_id#">Distance <strong class="tooltips" title="#distance_collect#" style="font-size:1.1em;">#distance#</strong> <span style="font-size:0.8em;">Km</span><br/></span>
+    <span class="elevation #elevation_history#" data-cmd_id="#elevation_id#">Hauteur <strong class="tooltips" title="#elevation_collect#" style="font-size:1.1em;">#elevation#</strong> <span style="font-size:0.8em;">m</span></span>
+
+    <legend style="color:white;margin-bottom : 0px;font-size : 15px;font-weight: bold;width:90%">Mesure</legend>
+    <span class="measuregrps1 #measuregrps1_history#" data-cmd_id="#measuregrps1_id#">Poids <strong class="tooltips" title="#measuregrps1_collect#" style="font-size:1.1em;">#measuregrps1#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+    <span class="measuregrps8 #measuregrps8_history#" data-cmd_id="#measuregrps8_id#">Grasse <strong class="tooltips" title="#measuregrps8_collect#" style="font-size:1.1em;">#measuregrps8#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+    <span class="measuregrps5 #measuregrps1_history#" data-cmd_id="#measuregrps5_id#">Maigre <strong class="tooltips" title="#measuregrps5_collect#" style="font-size:1.1em;">#measuregrps5#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
+    <span class="measuregrps11 #measuregrps11_history#" data-cmd_id="#measuregrps11_id#">Coeur <strong class="tooltips" title="#measuregrps11_collect#" style="font-size:1.1em;">#measuregrps11#</strong> <span style="font-size:0.8em;">bpm</span><br/></span>
+    <span class="measuregrps54 #measuregrps54_history#" data-cmd_id="#measuregrps54_id#">SPO2 <strong class="tooltips" title="#measuregrps54_collect#" style="font-size:1.1em;">#measuregrps54#</strong> <span style="font-size:0.8em;">%</span></span>
+
 
     <script>
-        if (isNaN(parseInt('#durationtosleep#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .sleep').remove();
-        } else {
-            var totalSleep = parseInt('#durationtosleep#') + parseInt('#deepsleepduration#') + parseInt('#lightsleepduration#');
-            var minute = (totalSleep % 60);
-            minute = minute.toString()
-            if (minute.length == 1) {
-                minute = '0' + minute;
-            }
-            $('.eqLogic[data-eqLogic_id=#id#] .totalSleep').append(parseInt(totalSleep / 60) + 'h' + minute);
-        }
+        $('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
+            jeedom.cmd.execute({id: '#refresh_id#'});
+        });
         if (isNaN(parseInt('#measuregrps1#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .body').remove();
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps1').remove();
+        }
+        if (isNaN(parseInt('#measuregrps8#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').remove();
+        }
+        if (isNaN(parseInt('#measuregrps5#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').remove();
+        }
+        if (isNaN(parseInt('#measuregrps14#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
         }
         if (isNaN(parseInt('#measuregrps11#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
