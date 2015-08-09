@@ -26,7 +26,7 @@ class withings extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
-	public static function pull() {
+	public static function cron30() {
 		foreach (self::byType('withings') as $withings) {
 			if ($withings->getIsEnable() == 1) {
 				try {

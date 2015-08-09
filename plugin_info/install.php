@@ -18,40 +18,14 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-function withings_install() {
-    $cron = cron::byClassAndFunction('withings', 'pull');
-    if (!is_object($cron)) {
-        $cron = new cron();
-        $cron->setClass('withings');
-        $cron->setFunction('pull');
-        $cron->setEnable(1);
-        $cron->setSchedule('*/30 * * * *');
-        $cron->save();
-    }
-}
-
 function withings_update() {
-    $cron = cron::byClassAndFunction('withings', 'pull');
-    if (!is_object($cron)) {
-        $cron = new cron();
-        $cron->setClass('withings');
-        $cron->setFunction('pull');
-        $cron->setEnable(1);
-        $cron->setSchedule('*/30 * * * *');
-        $cron->save();
-    }
-    $cron->stop();
+	$cron = cron::byClassAndFunction('withings', 'pull');
+	if (is_object($cron)) {
+		$cron->remove();
+	}
 
-    foreach (withings::byType('withings') as $withings) {
-        $withings->save();
-    }
+	foreach (withings::byType('withings') as $withings) {
+		$withings->save();
+	}
 }
-
-function withings_remove() {
-    $cron = cron::byClassAndFunction('withings', 'pull');
-    if (is_object($cron)) {
-        $cron->remove();
-    }
-}
-
 ?>
