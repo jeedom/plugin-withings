@@ -1,4 +1,4 @@
-<div class="eqLogic-widget eqLogic" style="background-color: #background_color#; padding : 0px; #style#;padding-left:3px;" data-eqLogic_id="#id#" data-version="mobile" >
+<div class="eqLogic-widget eqLogic" style="background-color: #background_color#; padding : 0px; #style#;padding-left:3px;" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="mobile" >
     <span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
     <i class='fa fa-refresh pull-right cursor refresh' style="margin-top: 3px;margin-right: 3px;"></i>
     <center style="font-size : 1.5em;">#name#</center>
@@ -25,40 +25,39 @@
     <span class="measuregrps11 #measuregrps11_history#" data-cmd_id="#measuregrps11_id#">Coeur <strong class="tooltips" title="#measuregrps11_collect#" style="font-size:1.1em;">#measuregrps11#</strong> <span style="font-size:0.8em;">bpm</span><br/></span>
     <span class="measuregrps54 #measuregrps54_history#" data-cmd_id="#measuregrps54_id#">SPO2 <strong class="tooltips" title="#measuregrps54_collect#" style="font-size:1.1em;">#measuregrps54#</strong> <span style="font-size:0.8em;">%</span></span>
 
-
     <script>
-        $('.eqLogic[data-eqLogic_id=#id#] .refresh').on('click', function () {
+        $('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
             jeedom.cmd.execute({id: '#refresh_id#'});
         });
         if (isNaN(parseInt('#measuregrps1#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps1').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .measuregrps1').remove();
         }
         if (isNaN(parseInt('#measuregrps8#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps8').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .measuregrps8').remove();
         }
         if (isNaN(parseInt('#measuregrps5#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps5').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .measuregrps5').remove();
         }
         if (isNaN(parseInt('#measuregrps14#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps14').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .measuregrps14').remove();
         }
         if (isNaN(parseInt('#measuregrps11#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .heart').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .heart').remove();
         }
         if (isNaN(parseInt('#step#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .step').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .step').remove();
         }
         if (isNaN(parseInt('#calories#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .calories').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .calories').remove();
         }
         if (isNaN(parseInt('#distance#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .distance').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .distance').remove();
         }
         if (isNaN(parseInt('#elevation#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .elevation').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .elevation').remove();
         }
         if (isNaN(parseInt('#measuregrps54#'))) {
-            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
+            $('.eqLogic[data-eqLogic_uid=#uid#] .measuregrps54').remove();
         }
     </script>
 
