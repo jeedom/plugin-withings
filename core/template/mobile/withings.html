@@ -24,6 +24,8 @@
     <span class="measuregrps5 #measuregrps1_history#" data-cmd_id="#measuregrps5_id#">Maigre <strong class="tooltips" title="#measuregrps5_collect#" style="font-size:1.1em;">#measuregrps5#</strong> <span style="font-size:0.8em;">Kg</span><br/></span>
     <span class="measuregrps11 #measuregrps11_history#" data-cmd_id="#measuregrps11_id#">Coeur <strong class="tooltips" title="#measuregrps11_collect#" style="font-size:1.1em;">#measuregrps11#</strong> <span style="font-size:0.8em;">bpm</span><br/></span>
     <span class="measuregrps54 #measuregrps54_history#" data-cmd_id="#measuregrps54_id#">SPO2 <strong class="tooltips" title="#measuregrps54_collect#" style="font-size:1.1em;">#measuregrps54#</strong> <span style="font-size:0.8em;">%</span></span>
+    <span class="measuregrps9 #measuregrps9_history#" data-cmd_id="#measuregrps9_id#">Diastolic <strong class="tooltips" title="#measuregrps9_collect#" style="font-size:1.1em;">#measuregrps9#</strong> <span style="font-size:0.8em;">mmHg</span></span>
+    <span class="measuregrps10 #measuregrps10_history#" data-cmd_id="#measuregrps10_id#">Systolic <strong class="tooltips" title="#measuregrps10_collect#" style="font-size:1.1em;">#measuregrps10#</strong> <span style="font-size:0.8em;">mmHg</span></span>
 
 
     <script>
@@ -59,6 +61,12 @@
         }
         if (isNaN(parseInt('#measuregrps54#'))) {
             $('.eqLogic[data-eqLogic_id=#id#] .measuregrps54').remove();
+        }
+        if (isNaN(parseInt('#measuregrps9#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps9').remove();
+        }
+        if (isNaN(parseInt('#measuregrps10#'))) {
+            $('.eqLogic[data-eqLogic_id=#id#] .measuregrps10').remove();
         }
     </script>
 
