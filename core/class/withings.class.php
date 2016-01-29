@@ -373,6 +373,38 @@ class withings extends eqLogic {
 		$measuregrps8->setEqLogic_id($this->getId());
 		$measuregrps8->save();
 
+		$measuregrps9 = $this->getCmd(null, 'measuregrps9');
+		if (!is_object($measuregrps9)) {
+			$measuregrps9 = new withingsCmd();
+			$measuregrps9->setLogicalId('measuregrps9');
+			$measuregrps9->setIsVisible(1);
+			$measuregrps9->setName(__('Diastolic', __FILE__));
+			$measuregrps9->setTemplate('dashboard', 'tile');
+			$measuregrps9->setTemplate('mobile', 'tile');
+		}
+		$measuregrps9->setType('info');
+		$measuregrps9->setSubType('numeric');
+		$measuregrps9->setUnite('mmHg');
+		$measuregrps9->setEventOnly(1);
+		$measuregrps9->setEqLogic_id($this->getId());
+		$measuregrps9->save();
+
+		$measuregrps10 = $this->getCmd(null, 'measuregrps10');
+		if (!is_object($measuregrps10)) {
+			$measuregrps10 = new withingsCmd();
+			$measuregrps10->setLogicalId('measuregrps10');
+			$measuregrps10->setIsVisible(1);
+			$measuregrps10->setName(__('Systolic', __FILE__));
+			$measuregrps10->setTemplate('dashboard', 'tile');
+			$measuregrps10->setTemplate('mobile', 'tile');
+		}
+		$measuregrps10->setType('info');
+		$measuregrps10->setSubType('numeric');
+		$measuregrps10->setUnite('mmHg');
+		$measuregrps10->setEventOnly(1);
+		$measuregrps10->setEqLogic_id($this->getId());
+		$measuregrps10->save();
+
 		$measuregrps11 = $this->getCmd(null, 'measuregrps11');
 		if (!is_object($measuregrps11)) {
 			$measuregrps11 = new withingsCmd();
