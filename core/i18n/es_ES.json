@@ -1,0 +1,6 @@
+{
+    "plugins/withings/plugin_info/info.xml": {
+        "Plugin pour Withings": "Plugin para Withings",
+        "Vérifiez bien que vous avez correctement configuré la partie Générale -> Administaction -> Configuration puis reseaux, en effet il faut lors de l'association de Jeedom au compte Withings que votre Jeedom soit accessible de l'exterieur (ensuite cela n'est plus nécessaire)": "Asegúrese de que ha configurado correctamente la sección General -> Administración -> Configuración y redes, de hecho debemos a la asociación Jeedom a la cuenta Withings que vuestro Jeedom sea accesible desde el exterior (despues ya no es necesario )"
+    }
+}

@@ -99,10 +99,25 @@ foreach (object::all() as $object) {
                 {{Nécessite de pouvoir accéder à jeedom de l'exterieur et d'avoir bien configuré la partie reseaux dans jeedom}}
             </div>
         </div>
+		 <legend><i class="fa fa-wrench"></i>  {{Masquer Blocs}}</legend>
+             <div class="form-group">
+               <div class="col-lg-2">
+			   <label class="col-lg-6 control-label">{{Sommeil}} </label>
+               <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-l1key="configuration" data-l2key="hidesleep" checked/>
+               </div>
+               <div class="col-lg-2">
+			   <label class="col-lg-6 control-label">{{Activité }} </label>
+               <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-l1key="configuration" data-l2key="hideactivity" checked/>
+               </div>
+               <div class="col-lg-2">
+			   <label class="col-lg-6 control-label">{{Mesure }} </label>
+               <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-l1key="configuration" data-l2key="hidemesure" checked/>
+               </div>
+			  </div>
     </fieldset>
 </form>
 
-<legend>{{Commandes}}</legend>
+<legend><i class="fa fa-list-alt"></i>  {{Tableau de commandes}}</legend>
 <table id="table_cmd" class="table table-bordered table-condensed">
     <thead>
         <tr>

@@ -112,12 +112,23 @@ class withings extends eqLogic {
 			return '';
 		}
 		$_version = jeedom::versionAlias($_version);
-		if ($this->getDisplay('hideOn' . $_version) == 1) {
-			return '';
-		}
-		$mc = cache::byKey('withingsWidget' . $_version . $this->getId());
+		$mc = cache::byKey('withingsWidget' . jeedom::versionAlias($_version) . $this->getId());
 		if ($mc->getValue() != '') {
 			return preg_replace("/" . preg_quote(self::UIDDELIMITER) . "(.*?)" . preg_quote(self::UIDDELIMITER) . "/", self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER, $mc->getValue());
+		}
+		$hidesommeil=$this->getConfiguration('hidesleep');
+        $hideactivity=$this->getConfiguration('hideactivity');
+        $hidemeasure=$this->getConfiguration('hidemesure');
+		$totshow = $hidesommeil + $hideactivity + $hidemeasure;
+		if ($totshow == 2) {
+			$colsm = 'col-sm-12';
+			$width = 130;
+		} else if ($totshow == 1) {
+			$colsm = 'col-sm-6';
+			$width = 230;
+		} else {
+			$colsm = 'col-sm-4';
+			$width = 330;
 		}
 		$replace = array(
 			'#name#' => $this->getName(),
@@ -125,6 +136,11 @@ class withings extends eqLogic {
 			'#background_color#' => '#009ee3',
 			'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
 			'#uid#' => 'withings' . $this->getId() . self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER,
+            '#showsommeil#' => $hidesommeil,
+            '#showactivity#' => $hideactivity,
+            '#showmesure#' => $hidemeasure,
+            '#colsm#' => $colsm,
+            '#width#' => $width,
 		);
 
 		foreach ($this->getCmd('info') as $cmd) {
