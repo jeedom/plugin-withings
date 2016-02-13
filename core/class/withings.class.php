@@ -116,9 +116,9 @@ class withings extends eqLogic {
 		if ($mc->getValue() != '') {
 			return preg_replace("/" . preg_quote(self::UIDDELIMITER) . "(.*?)" . preg_quote(self::UIDDELIMITER) . "/", self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER, $mc->getValue());
 		}
-		$hidesommeil=$this->getConfiguration('hidesleep');
-        $hideactivity=$this->getConfiguration('hideactivity');
-        $hidemeasure=$this->getConfiguration('hidemesure');
+		$hidesommeil = $this->getConfiguration('hidesleep');
+		$hideactivity = $this->getConfiguration('hideactivity');
+		$hidemeasure = $this->getConfiguration('hidemesure');
 		$totshow = $hidesommeil + $hideactivity + $hidemeasure;
 		if ($totshow == 2) {
 			$colsm = 'col-sm-12';
@@ -136,11 +136,11 @@ class withings extends eqLogic {
 			'#background_color#' => '#009ee3',
 			'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
 			'#uid#' => 'withings' . $this->getId() . self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER,
-            '#showsommeil#' => $hidesommeil,
-            '#showactivity#' => $hideactivity,
-            '#showmesure#' => $hidemeasure,
-            '#colsm#' => $colsm,
-            '#width#' => $width,
+			'#showsommeil#' => $hidesommeil,
+			'#showactivity#' => $hideactivity,
+			'#showmesure#' => $hidemeasure,
+			'#colsm#' => $colsm,
+			'#width#' => $width,
 		);
 
 		foreach ($this->getCmd('info') as $cmd) {
@@ -184,8 +184,6 @@ class withings extends eqLogic {
 		}
 		$step->setType('info');
 		$step->setSubType('numeric');
-		$step->setUnite('');
-		$step->setEventOnly(1);
 		$step->setEqLogic_id($this->getId());
 		$step->save();
 
@@ -213,7 +211,6 @@ class withings extends eqLogic {
 		$distance->setType('info');
 		$distance->setSubType('numeric');
 		$distance->setUnite('km');
-		$distance->setEventOnly(1);
 		$distance->setEqLogic_id($this->getId());
 		$distance->save();
 
@@ -228,8 +225,6 @@ class withings extends eqLogic {
 		}
 		$calories->setType('info');
 		$calories->setSubType('numeric');
-		$calories->setUnite('');
-		$calories->setEventOnly(1);
 		$calories->setEqLogic_id($this->getId());
 		$calories->save();
 
@@ -244,8 +239,6 @@ class withings extends eqLogic {
 		}
 		$elevation->setType('info');
 		$elevation->setSubType('numeric');
-		$elevation->setUnite('');
-		$elevation->setEventOnly(1);
 		$elevation->setEqLogic_id($this->getId());
 		$elevation->save();
 
@@ -261,7 +254,6 @@ class withings extends eqLogic {
 		$wakeupduration->setType('info');
 		$wakeupduration->setSubType('numeric');
 		$wakeupduration->setUnite('min');
-		$wakeupduration->setEventOnly(1);
 		$wakeupduration->setEqLogic_id($this->getId());
 		$wakeupduration->save();
 
@@ -277,7 +269,6 @@ class withings extends eqLogic {
 		$durationtosleep->setType('info');
 		$durationtosleep->setSubType('numeric');
 		$durationtosleep->setUnite('min');
-		$durationtosleep->setEventOnly(1);
 		$durationtosleep->setEqLogic_id($this->getId());
 		$durationtosleep->save();
 
@@ -293,7 +284,6 @@ class withings extends eqLogic {
 		$deepsleepduration->setType('info');
 		$deepsleepduration->setSubType('numeric');
 		$deepsleepduration->setUnite('min');
-		$deepsleepduration->setEventOnly(1);
 		$deepsleepduration->setEqLogic_id($this->getId());
 		$deepsleepduration->save();
 
@@ -309,7 +299,6 @@ class withings extends eqLogic {
 		$lightsleepduration->setType('info');
 		$lightsleepduration->setSubType('numeric');
 		$lightsleepduration->setUnite('min');
-		$lightsleepduration->setEventOnly(1);
 		$lightsleepduration->setEqLogic_id($this->getId());
 		$lightsleepduration->save();
 
@@ -324,8 +313,6 @@ class withings extends eqLogic {
 		}
 		$wakeupcount->setType('info');
 		$wakeupcount->setSubType('numeric');
-		$wakeupcount->setUnite('');
-		$wakeupcount->setEventOnly(1);
 		$wakeupcount->setEqLogic_id($this->getId());
 		$wakeupcount->save();
 
@@ -341,7 +328,6 @@ class withings extends eqLogic {
 		$measuregrps1->setType('info');
 		$measuregrps1->setSubType('numeric');
 		$measuregrps1->setUnite('kg');
-		$measuregrps1->setEventOnly(1);
 		$measuregrps1->setEqLogic_id($this->getId());
 		$measuregrps1->save();
 
@@ -357,7 +343,6 @@ class withings extends eqLogic {
 		$measuregrps5->setType('info');
 		$measuregrps5->setSubType('numeric');
 		$measuregrps5->setUnite('kg');
-		$measuregrps5->setEventOnly(1);
 		$measuregrps5->setEqLogic_id($this->getId());
 		$measuregrps5->save();
 
@@ -373,7 +358,6 @@ class withings extends eqLogic {
 		$measuregrps6->setType('info');
 		$measuregrps6->setSubType('numeric');
 		$measuregrps6->setUnite('%');
-		$measuregrps6->setEventOnly(1);
 		$measuregrps6->setEqLogic_id($this->getId());
 		$measuregrps6->save();
 
@@ -389,7 +373,6 @@ class withings extends eqLogic {
 		$measuregrps8->setType('info');
 		$measuregrps8->setSubType('numeric');
 		$measuregrps8->setUnite('kg');
-		$measuregrps8->setEventOnly(1);
 		$measuregrps8->setEqLogic_id($this->getId());
 		$measuregrps8->save();
 
@@ -405,7 +388,6 @@ class withings extends eqLogic {
 		$measuregrps9->setType('info');
 		$measuregrps9->setSubType('numeric');
 		$measuregrps9->setUnite('mmHg');
-		$measuregrps9->setEventOnly(1);
 		$measuregrps9->setEqLogic_id($this->getId());
 		$measuregrps9->save();
 
@@ -421,7 +403,6 @@ class withings extends eqLogic {
 		$measuregrps10->setType('info');
 		$measuregrps10->setSubType('numeric');
 		$measuregrps10->setUnite('mmHg');
-		$measuregrps10->setEventOnly(1);
 		$measuregrps10->setEqLogic_id($this->getId());
 		$measuregrps10->save();
 
@@ -437,7 +418,6 @@ class withings extends eqLogic {
 		$measuregrps11->setType('info');
 		$measuregrps11->setSubType('numeric');
 		$measuregrps11->setUnite('bpm');
-		$measuregrps11->setEventOnly(1);
 		$measuregrps11->setEqLogic_id($this->getId());
 		$measuregrps11->save();
 
@@ -453,7 +433,6 @@ class withings extends eqLogic {
 		$measuregrps54->setType('info');
 		$measuregrps54->setSubType('numeric');
 		$measuregrps54->setUnite('%');
-		$measuregrps54->setEventOnly(1);
 		$measuregrps54->setEqLogic_id($this->getId());
 		$measuregrps54->save();
 		try {
