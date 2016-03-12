@@ -23,6 +23,7 @@ class withings extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
 	private $_collectDate = '';
+	public static $_widgetPossibility = array('custom' => true);
 
 	/*     * ***********************Methode static*************************** */
 
@@ -105,17 +106,11 @@ class withings extends eqLogic {
 	}
 
 	public function toHtml($_version = 'dashboard') {
-		if ($this->getIsEnable() != 1) {
-			return '';
-		}
-		if (!$this->hasRight('r')) {
-			return '';
+		$replace = $this->preToHtml($_version);
+		if (!is_array($replace)) {
+			return $replace;
 		}
 		$_version = jeedom::versionAlias($_version);
-		$mc = cache::byKey('withingsWidget' . jeedom::versionAlias($_version) . $this->getId());
-		if ($mc->getValue() != '') {
-			return preg_replace("/" . preg_quote(self::UIDDELIMITER) . "(.*?)" . preg_quote(self::UIDDELIMITER) . "/", self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER, $mc->getValue());
-		}
 		$hidesommeil = $this->getConfiguration('hidesleep');
 		$hideactivity = $this->getConfiguration('hideactivity');
 		$hidemeasure = $this->getConfiguration('hidemesure');
@@ -130,18 +125,11 @@ class withings extends eqLogic {
 			$colsm = 'col-sm-4';
 			$width = 330;
 		}
-		$replace = array(
-			'#name#' => $this->getName(),
-			'#id#' => $this->getId(),
-			'#background_color#' => '#009ee3',
-			'#eqLink#' => ($this->hasRight('w')) ? $this->getLinkToConfiguration() : '#',
-			'#uid#' => 'withings' . $this->getId() . self::UIDDELIMITER . mt_rand() . self::UIDDELIMITER,
-			'#showsommeil#' => $hidesommeil,
-			'#showactivity#' => $hideactivity,
-			'#showmesure#' => $hidemeasure,
-			'#colsm#' => $colsm,
-			'#width#' => $width,
-		);
+		$replace['#showsommeil#'] = $hidesommeil;
+		$replace['#showactivity#'] = $hideactivity;
+		$replace['#showmesure#'] = $hidemeasure;
+		$replace['#colsm#'] = $colsm;
+		$replace['#width#'] = $width;
 
 		foreach ($this->getCmd('info') as $cmd) {
 			$replace['#' . $cmd->getLogicalId() . '_history#'] = '';
@@ -159,16 +147,8 @@ class withings extends eqLogic {
 
 		$refresh = $this->getCmd(null, 'refresh');
 		$replace['#refresh_id#'] = $refresh->getId();
-
-		$parameters = $this->getDisplay('parameters');
-		if (is_array($parameters)) {
-			foreach ($parameters as $key => $value) {
-				$replace['#' . $key . '#'] = $value;
-			}
-		}
-
 		$html = template_replace($replace, getTemplate('core', $_version, 'withings', 'withings'));
-		cache::set('withingsWidget' . $_version . $this->getId(), $html, 0);
+		cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
 		return $html;
 	}
 

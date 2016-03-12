@@ -7,7 +7,7 @@
     <licence>AGPL</licence>
     <author>Loïc Gevrey</author>
     <installation>Vérifiez bien que vous avez correctement configuré la partie Générale -> Administration -> Configuration puis reseaux, en effet il faut lors de l'association de Jeedom au compte Withings que votre Jeedom soit accessible de l'exterieur (ensuite cela n'est plus nécessaire)</installation>
-    <require>1.136</require>
+    <require>2.0</require>
     <version>1.0</version>
     <category>health</category>
     <include type="php">withings.inc</include>
