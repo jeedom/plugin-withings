@@ -110,7 +110,7 @@ class withings extends eqLogic {
 		if (!is_array($replace)) {
 			return $replace;
 		}
-		$_version = jeedom::versionAlias($_version);
+		$version = jeedom::versionAlias($_version);
 		$hidesommeil = $this->getConfiguration('hidesleep');
 		$hideactivity = $this->getConfiguration('hideactivity');
 		$hidemeasure = $this->getConfiguration('hidemesure');
@@ -147,7 +147,7 @@ class withings extends eqLogic {
 
 		$refresh = $this->getCmd(null, 'refresh');
 		$replace['#refresh_id#'] = $refresh->getId();
-		$html = template_replace($replace, getTemplate('core', $_version, 'withings', 'withings'));
+		$html = template_replace($replace, getTemplate('core', $version, 'withings', 'withings'));
 		cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
 		return $html;
 	}
