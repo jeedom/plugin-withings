@@ -3,12 +3,10 @@
     <id>withings</id>
     <name>Withings</name>
     <description>Plugin pour Withings</description>
-    <icon>icon loisir-exercise1</icon>
     <licence>AGPL</licence>
-    <author>Loïc Gevrey</author>
+    <author>Loïc</author>
     <installation>Vérifiez bien que vous avez correctement configuré la partie Générale -> Administration -> Configuration puis reseaux, en effet il faut lors de l'association de Jeedom au compte Withings que votre Jeedom soit accessible de l'exterieur (ensuite cela n'est plus nécessaire)</installation>
     <require>2.2</require>
-    <version>1.0</version>
     <category>health</category>
     <include type="php">withings.inc</include>
 </info>
