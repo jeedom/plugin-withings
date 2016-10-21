@@ -1,0 +1,63 @@
+Une fois le plugin Wihtings installé et activé allez sur :
+
+image::../images/withings-1.JPG[]
+
+== Création d'un équipement
+
+Cliquez sur ajouter une personne pour ajouter quelqu'un : 
+
+image::../images/withings-2.JPG[]
+
+[TIP]
+Comme à beaucoup d'endroit sur Jeedom, mettre la souris tout à gauche permet de faire apparaître un menu d'accès rapide (vous pouvez à partir de votre profils le laisser toujours visible)
+
+Donnez un nom à cette personne (cet équipement) et validez : 
+
+image::../images/withings-3.JPG[]
+
+Vous devez ensuite avoir cette page : 
+
+image::../images/withings-4.JPG[]
+
+[IMPORTANT]
+Le premier truc à verifier est "URL de retour". Celle-ci doit être validée et accessible de l'extérieure sinon vous ne pourrez pas associer Jeedom a votre compte Withings. Si ce n'est pas le cas, mettez à jour vos paramètres de configuration réseau dans Général -> Administration -> Configuration puis partie "réseaux", voir https://www.jeedom.fr/doc/documentation/core/fr_FR/doc-core-administration.html.html#administration[ici]
+
+[TIP]
+On peut voir ici que l'équipement n'est lié à aucun équipement car il n'y a pas de bouton en face du "Mode push".
+
+Cliquez sur "Lier à un utilisateur" pour lier cet équipement à votre compte Withings : 
+
+image::../images/withings-5.JPG[]
+
+Connectez-vous à votre compte Withings, puis validez la demande d'autorisation : 
+
+image::../images/withings-6.JPG[]
+
+Si vous obtenez une page blanche ou une erreur, c'est que votre configuration réseaux n'est pas bonne, sinon vous devez retomber sur cette page (vous remarquerez que cette fois, il y a un bouton "Activer" en face de "Mode push") : 
+
+image::../images/withings-7.JPG[]
+
+
+== Configuration
+
+Voici les détails de la configuration du plugin : 
+
+image::../images/withings-7.JPG[]
+
+* Nom de la personne : nom de l'équipement Withings
+* Objet parent : nom de l'objet auquel ratacher l'équipement
+* Activer/Visible : permet d'activer l'équipement (ne pas oublier de le faire sinon vous n'aurez aucune donnée) et de le rendre visible sur le dashboard
+* Mode push : une fois activé, il permet à Jeedom de recevoir en temps réel les informations de Wihtings (par défaut il peut y avoir jusqu'à 30 min de délai). Attention activer ce mode nécessite d'avoir bien configuré la partie réseau (et de manière durable !!!)
+* Pour chaque commande : 
+** Historiser : permet d'historiser la commande
+** Afficher : permet de la rendre visible ou non sur le dashboard
+** Avancée (petites roues crantées) : permet d'afficher la configuration avancée de la commande
+** Tester : permet de tester la commande pour voir sa valeur
+** Supprimer (bouton "-") : pour supprimer la commande
+
+== Widget
+
+Voici le widget : 
+
+image::../images/withings-8.JPG[]
+

@@ -1,0 +1,5 @@
+= Withings
+
+Plugin pour appareils Withings, il permet de récupérer les informations des balances withings (poids, masse graisseuse mais pas le CO2) et des bracelets (distance, nombre de pas, heures de sommeil profond, heures de sommeil léger...)
+
+include::configuration.asciidoc[]
