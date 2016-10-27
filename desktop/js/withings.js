@@ -14,7 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
-
+ $('#bt_healthwithings').on('click', function () {
+    $('#md_modal').dialog({title: "{{Santé Withings}}"});
+    $('#md_modal').load('index.php?v=d&plugin=withings&modal=health').dialog('open');
+});
  $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
  $('#bt_linkToUser').on('click', function () {
@@ -60,6 +63,10 @@
             $('#div_alert').showAlert({message: data.result, level: 'danger'});
             return;
         }
+		if(isset(data.result.status) && data.result.status != 0){
+			$('#div_alert').showAlert({message: data.result.error, level: 'danger'});
+            return;
+		}
 
         $('#div_alert').showAlert({message: 'Mode push actif', level: 'success'});
         printEqLogic({id : $('.eqLogic .eqLogicAttr[data-l1key=id]').value()});
@@ -86,6 +93,10 @@
             $('#div_alert').showAlert({message: data.result, level: 'danger'});
             return;
         }
+		if(isset(data.result.status) && data.result.status != 0){
+			$('#div_alert').showAlert({message: data.result.error, level: 'danger'});
+            return;
+		}
         $('#div_alert').showAlert({message: 'Mode push inactif', level: 'success'});
         printEqLogic({id : $('.eqLogic .eqLogicAttr[data-l1key=id]').value()});
     }
@@ -142,8 +153,8 @@ function addCmdToTable(_cmd) {
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display : none;">';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="name"></td>';
     tr += '<td>';
-    tr += '<span><input type="checkbox" data-size="mini" data-label-text="{{Historiser}}" class="cmdAttr bootstrapSwitch" data-l1key="isHistorized" /></span> ';
-    tr += '<span><input type="checkbox" data-size="mini" data-label-text="{{Afficher}}" class="cmdAttr bootstrapSwitch" data-l1key="isVisible" checked/></span> ';
+    tr += '<span><input type="checkbox" class="cmdAttr" data-l1key="isHistorized" />{{Historiser}}</span> ';
+    tr += '<span><input type="checkbox" class="cmdAttr" data-l1key="isVisible" checked/>{{Afficher}}</span> ';
     tr += '</td>';
     tr += '<td>';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" style="display : none;">';

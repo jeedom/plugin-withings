@@ -17,7 +17,6 @@
  */
 
 /* * ***************************Includes********************************* */
-require_once dirname(__FILE__) . '/../../core/php/withings.inc.php';
 
 class withings extends eqLogic {
 	/*     * *************************Attributs****************************** */
@@ -47,109 +46,173 @@ class withings extends eqLogic {
 			}
 		}
 	}
+	
+	public static function authorizeWithings($_oauth_token,$_oauth_secret,$_consumer_key,$_consumer_secret){
+		$nonce = hash('sha1', self::makeRandomString());
+		$time = time();
+		$base_url = 'https://oauth.withings.com/account/authorize';
+		$url1 = 'oauth_consumer_key='.$_consumer_key . '&oauth_nonce=' . $nonce;
+		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$_oauth_token.'&oauth_version=1.0';
+		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
+		$oauth_signature = self::makeSignature($basestring,$_consumer_secret.'&'.$_oauth_secret);
+		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
+		return $url;
+	}
+	
+	public static function makeRandomString($bits = 256) {
+		$bytes = ceil($bits / 8);
+		$return = '';
+		for ($i = 0; $i < $bytes; $i++) {
+			$return .= chr(mt_rand(0, 255));
+		}
+		return $return;
+	}
+	
+	public static function makeSignature($_basestring,$_secret) {
+		$signature = hash_hmac("sha1", $_basestring, $_secret, True);
+		$based64 = base64_encode($signature);
+		return urlencode($based64);
+	}
 
 	/*     * *********************Methode d'instance************************* */
 
 	public function registerNotification() {
-		$callback = network::getNetworkAccess('external') . '/plugins/withings/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . config::byKey('api');
-		$withings = $this->getWithings();
-		return $withings->doRequest('notify?action=subscribe&userid=' . $this->getConfiguration('userid') . '&callbackurl=' . urlencode($callback) . '&comment=Jeedom');
+		$callback = urlencode(network::getNetworkAccess('external') . '/plugins/withings/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . jeedom::getApiKey('withings'));
+		$type ='notify';
+		$subtype ='action=subscribe';
+		$nonce = hash('sha1', self::makeRandomString());
+		$time = time();
+		$base_url='https://wbsapi.withings.net/' . $type;
+		$consumer_key = $this->getConfiguration('client_id');
+		$consumer_secret = $this->getConfiguration('client_secret');
+		$oauthtoken = $this->getConfiguration('oauthtoken');
+		$oauthsecret = $this->getConfiguration('oauthsecret');
+		$userid =  $this->getConfiguration('userid');
+		$url1 = $subtype .'&callbackurl=' . $callback . '&comment=Jeedom&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
+		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&userid='.$userid;
+		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
+		$oauth_signature = self::makeSignature($basestring,$consumer_secret.'&'.$oauthsecret);
+		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
+		$cmd =  "curl --request GET '" . $url . "'";
+		$return = shell_exec($cmd);
+		return json_decode($return,true);
 	}
 
 	public function listNotification() {
-		$withings = $this->getWithings();
-		return $withings->doRequest('notify?action=list');
+		$type ='notify';
+		$subtype ='action=list';
+		$result = $this->callWithings($type,$subtype);
+		log::add('withings','debug',$result);
+		return json_decode($result,true);
 	}
 
 	public function revokeNotification($_callback) {
+		$type ='notify';
+		$subtype ='action=revoke';
+		$nonce = hash('sha1', self::makeRandomString());
 		$withings = $this->getWithings();
-		return $withings->doRequest('notify?action=revoke&userid=' . $this->getConfiguration('userid') . '&callbackurl=' . urlencode($_callback));
+		$time = time();
+		$base_url='https://wbsapi.withings.net/' . $type;
+		$consumer_key = $this->getConfiguration('client_id');
+		$consumer_secret = $this->getConfiguration('client_secret');
+		$oauthtoken = $this->getConfiguration('oauthtoken');
+		$oauthsecret = $this->getConfiguration('oauthsecret');
+		$userid =  $this->getConfiguration('userid');
+		$url1 = $subtype .'&callbackurl=' . urlencode($_callback) . '&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
+		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&userid='.$userid;
+		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
+		$oauth_signature = self::makeSignature($basestring,$consumer_secret.'&'.$oauthsecret);
+		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
+		$cmd =  "curl --request GET '" . $url . "'";
+		$return = shell_exec($cmd);
+		return json_decode($return,true);
 	}
-
+	
 	public function linkToUser() {
-		if (!class_exists('OAuth')) {
-			throw new Exception('Classe OAuth non trouvée merci de l\'installer : "sudo apt-get update;sudo apt-get install -y php5-dev;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart"');
-		}
 		@session_start();
-		$_SESSION['withings_Session'] = 0;
-		$withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-		return $withings->initSession(network::getNetworkAccess() . '/plugins/withings/core/php/callback.php?eqLogic_id=' . $this->getId());
+		$nonce = hash('sha1', self::makeRandomString());
+		$time = time();
+		$consumer_key = $this->getConfiguration('client_id');
+		$callback = urlencode(network::getNetworkAccess('external') . '/plugins/withings/core/php/callback.php?apikey=' . jeedom::getApiKey('withings') . '&eqLogic_id=' . $this->getId());
+		$base_url = 'https://oauth.withings.com/account/request_token';
+		$url1 = 'oauth_callback=' . $callback . '&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
+		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_version=1.0';
+		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
+		$oauth_signature = self::makeSignature($basestring,$this->getConfiguration('client_secret').'&');
+		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
+		$cmd =  "curl --request GET '" . $url . "'";
+		$return = shell_exec($cmd);
+		$return = str_replace('oauth_token=','',$return);
+		$return = str_replace('_token_secret=','',$return);
+		$listResult = explode('&oauth',$return);
+		$oauth_token = $listResult[0];
+		$oauth_secret = $listResult[1];
+		$this->setConfiguration('oauthtoken',$oauth_token);
+		$this->setConfiguration('oauthsecret',$oauth_secret);
+		$this->save();
+		return self::authorizeWithings($oauth_token,$oauth_secret,$consumer_key,$this->getConfiguration('client_secret'));
 	}
-
-	public function getWithings() {
-		if (!class_exists('OAuth')) {
-			throw new Exception('Classe OAuth non trouvée merci de l\'installer : "sudo apt-get update;sudo apt-get install -y php5-dev;sudo pecl install oauth;echo "extension=oauth.so" >> /etc/php5/cli/php.ini;echo "extension=oauth.so" >> /etc/php5/fpm/php.ini; sudo service php5-fpm restart"');
+	
+	public function callWithings($_type,$_subtype,$_date='',$_startdate ='',$_enddate =''){
+		$base_url='https://wbsapi.withings.net/' . $_type;
+		$nonce = hash('sha1', self::makeRandomString());
+		$time = time();
+		$consumer_key = $this->getConfiguration('client_id');
+		$consumer_secret = $this->getConfiguration('client_secret');
+		$oauthtoken = $this->getConfiguration('oauthtoken');
+		$oauthsecret = $this->getConfiguration('oauthsecret');
+		$userid =  $this->getConfiguration('userid');
+		if ($_date != ''){
+			$url1 = $_subtype .'&date='.$_date.'&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
+		} else {
+			$url1 = $_subtype .'&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
 		}
-		$withings = new WithingsPHP(config::byKey('client_key', 'withings'), config::byKey('secret_key', 'withings'));
-		$withings->setOAuthDetails($this->getConfiguration('token'), $this->getConfiguration('secret'));
-		return $withings;
+		if ($_startdate != '' && $_subtype != 'action=getmeas'){
+			$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&startdateymd='.$_startdate.'&enddateymd='.$_enddate.'&userid='.$userid;
+		} else if ($_startdate != '' && $_subtype == 'action=getmeas'){
+			$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&startdate='.$_startdate.'&userid='.$userid;
+		} else {
+			$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&userid='.$userid;
+		}
+		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
+		$oauth_signature = self::makeSignature($basestring,$consumer_secret.'&'.$oauthsecret);
+		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
+		$cmd =  "curl --request GET '" . $url . "'";
+		log::add('withings','debug',$url);
+		$return = shell_exec($cmd);
+		return $return;
 	}
 
 	public function getActivity($_date) {
-		$withings = $this->getWithings();
-		return $withings->doRequest("v2/measure?action=getactivity&userid=" . $this->getConfiguration('userid') . '&date=' . $_date);
+		$type ='v2/measure';
+		$subtype ='action=getactivity';
+		$result = $this->callWithings($type,$subtype,$_date);
+		log::add('withings','debug',$result);
+		return json_decode($result,true);
 	}
 
 	public function getBody($_date) {
-		$withings = $this->getWithings();
-		return $withings->doRequest("measure?action=getmeas&userid=" . $this->getConfiguration('userid') . '&startdate=' . $_date);
+		$type ='measure';
+		$subtype ='action=getmeas';
+		$result = $this->callWithings($type,$subtype,'',$_date);
+		log::add('withings','debug',$result);
+		return json_decode($result,true);
 	}
 
 	public function getSleepMesure($_startdate, $_enddate) {
-		$withings = $this->getWithings();
-		return $withings->doRequest("v2/sleep?action=get&userid=" . $this->getConfiguration('userid') . '&startdate=' . $_startdate . '&enddate=' . $_enddate);
+		$type ='v2/sleep';
+		$subtype ='action=get';
+		$result = $this->callWithings($type,$subtype,'',$_startdate,$_enddate);
+		log::add('withings','debug',$result);
+		return json_decode($result,true);
 	}
 
 	public function getSleepSummary($_startdate, $_enddate) {
-		$withings = $this->getWithings();
-		return $withings->doRequest("v2/sleep?action=getsummary&startdateymd=" . $_startdate . '&enddate=' . $_enddate);
-	}
-
-	public function toHtml($_version = 'dashboard') {
-		$replace = $this->preToHtml($_version);
-		if (!is_array($replace)) {
-			return $replace;
-		}
-		$version = jeedom::versionAlias($_version);
-		$hidesommeil = $this->getConfiguration('hidesleep');
-		$hideactivity = $this->getConfiguration('hideactivity');
-		$hidemeasure = $this->getConfiguration('hidemesure');
-		$totshow = $hidesommeil + $hideactivity + $hidemeasure;
-		if ($totshow == 2) {
-			$colsm = 'col-sm-12';
-			$width = 130;
-		} else if ($totshow == 1) {
-			$colsm = 'col-sm-6';
-			$width = 230;
-		} else {
-			$colsm = 'col-sm-4';
-			$width = 330;
-		}
-		$replace['#showsommeil#'] = $hidesommeil;
-		$replace['#showactivity#'] = $hideactivity;
-		$replace['#showmesure#'] = $hidemeasure;
-		$replace['#colsm#'] = $colsm;
-		$replace['#width#'] = $width;
-
-		foreach ($this->getCmd('info') as $cmd) {
-			$replace['#' . $cmd->getLogicalId() . '_history#'] = '';
-			if ($cmd->getIsVisible() == 1) {
-				$replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
-				$replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
-				$replace['#' . $cmd->getLogicalId() . '_collect#'] = $cmd->getCollectDate();
-				if ($cmd->getIsHistorized() == 1) {
-					$replace['#' . $cmd->getLogicalId() . '_history#'] = 'history cursor';
-				}
-			} else {
-				$replace['#' . $cmd->getLogicalId() . '#'] = '';
-			}
-		}
-
-		$refresh = $this->getCmd(null, 'refresh');
-		$replace['#refresh_id#'] = $refresh->getId();
-		$html = template_replace($replace, getTemplate('core', $version, 'withings', 'withings'));
-		cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
-		return $html;
+		$type ='v2/sleep';
+		$subtype ='action=getsummary';
+		$result = $this->callWithings($type,$subtype,'',$_startdate,$_enddate);
+		log::add('withings','debug',$result);
+		return json_decode($result,true);
 	}
 
 	public function postSave() {
@@ -159,8 +222,8 @@ class withings extends eqLogic {
 			$step->setLogicalId('step');
 			$step->setIsVisible(1);
 			$step->setName(__('Pas', __FILE__));
-			$step->setTemplate('dashboard', 'tile');
-			$step->setTemplate('mobile', 'tile');
+			$step->setTemplate('dashboard', 'line');
+			$step->setTemplate('mobile', 'line');
 		}
 		$step->setType('info');
 		$step->setSubType('numeric');
@@ -185,8 +248,8 @@ class withings extends eqLogic {
 			$distance->setLogicalId('distance');
 			$distance->setIsVisible(1);
 			$distance->setName(__('Distance', __FILE__));
-			$distance->setTemplate('dashboard', 'tile');
-			$distance->setTemplate('mobile', 'tile');
+			$distance->setTemplate('dashboard', 'line');
+			$distance->setTemplate('mobile', 'line');
 		}
 		$distance->setType('info');
 		$distance->setSubType('numeric');
@@ -200,8 +263,8 @@ class withings extends eqLogic {
 			$calories->setLogicalId('calories');
 			$calories->setIsVisible(1);
 			$calories->setName(__('Calories', __FILE__));
-			$calories->setTemplate('dashboard', 'tile');
-			$calories->setTemplate('mobile', 'tile');
+			$calories->setTemplate('dashboard', 'line');
+			$calories->setTemplate('mobile', 'line');
 		}
 		$calories->setType('info');
 		$calories->setSubType('numeric');
@@ -214,8 +277,8 @@ class withings extends eqLogic {
 			$elevation->setLogicalId('elevation');
 			$elevation->setIsVisible(1);
 			$elevation->setName(__('Elévation', __FILE__));
-			$elevation->setTemplate('dashboard', 'tile');
-			$elevation->setTemplate('mobile', 'tile');
+			$elevation->setTemplate('dashboard', 'line');
+			$elevation->setTemplate('mobile', 'line');
 		}
 		$elevation->setType('info');
 		$elevation->setSubType('numeric');
@@ -228,8 +291,8 @@ class withings extends eqLogic {
 			$wakeupduration->setLogicalId('wakeupduration');
 			$wakeupduration->setIsVisible(1);
 			$wakeupduration->setName(__('Durée du réveil', __FILE__));
-			$wakeupduration->setTemplate('dashboard', 'tile');
-			$wakeupduration->setTemplate('mobile', 'tile');
+			$wakeupduration->setTemplate('dashboard', 'line');
+			$wakeupduration->setTemplate('mobile', 'line');
 		}
 		$wakeupduration->setType('info');
 		$wakeupduration->setSubType('numeric');
@@ -243,8 +306,8 @@ class withings extends eqLogic {
 			$durationtosleep->setLogicalId('durationtosleep');
 			$durationtosleep->setIsVisible(1);
 			$durationtosleep->setName(__('Temps pour dormir', __FILE__));
-			$durationtosleep->setTemplate('dashboard', 'tile');
-			$durationtosleep->setTemplate('mobile', 'tile');
+			$durationtosleep->setTemplate('dashboard', 'line');
+			$durationtosleep->setTemplate('mobile', 'line');
 		}
 		$durationtosleep->setType('info');
 		$durationtosleep->setSubType('numeric');
@@ -258,8 +321,8 @@ class withings extends eqLogic {
 			$deepsleepduration->setLogicalId('deepsleepduration');
 			$deepsleepduration->setIsVisible(1);
 			$deepsleepduration->setName(__('Sommeils profond', __FILE__));
-			$deepsleepduration->setTemplate('dashboard', 'tile');
-			$deepsleepduration->setTemplate('mobile', 'tile');
+			$deepsleepduration->setTemplate('dashboard', 'line');
+			$deepsleepduration->setTemplate('mobile', 'line');
 		}
 		$deepsleepduration->setType('info');
 		$deepsleepduration->setSubType('numeric');
@@ -273,8 +336,8 @@ class withings extends eqLogic {
 			$lightsleepduration->setLogicalId('lightsleepduration');
 			$lightsleepduration->setIsVisible(1);
 			$lightsleepduration->setName(__('Sommeil léger', __FILE__));
-			$lightsleepduration->setTemplate('dashboard', 'tile');
-			$lightsleepduration->setTemplate('mobile', 'tile');
+			$lightsleepduration->setTemplate('dashboard', 'line');
+			$lightsleepduration->setTemplate('mobile', 'line');
 		}
 		$lightsleepduration->setType('info');
 		$lightsleepduration->setSubType('numeric');
@@ -288,8 +351,8 @@ class withings extends eqLogic {
 			$wakeupcount->setLogicalId('wakeupcount');
 			$wakeupcount->setIsVisible(1);
 			$wakeupcount->setName(__('Nombre de réveils', __FILE__));
-			$wakeupcount->setTemplate('dashboard', 'tile');
-			$wakeupcount->setTemplate('mobile', 'tile');
+			$wakeupcount->setTemplate('dashboard', 'line');
+			$wakeupcount->setTemplate('mobile', 'line');
 		}
 		$wakeupcount->setType('info');
 		$wakeupcount->setSubType('numeric');
@@ -302,8 +365,8 @@ class withings extends eqLogic {
 			$measuregrps1->setLogicalId('measuregrps1');
 			$measuregrps1->setIsVisible(1);
 			$measuregrps1->setName(__('Poids', __FILE__));
-			$measuregrps1->setTemplate('dashboard', 'tile');
-			$measuregrps1->setTemplate('mobile', 'tile');
+			$measuregrps1->setTemplate('dashboard', 'line');
+			$measuregrps1->setTemplate('mobile', 'line');
 		}
 		$measuregrps1->setType('info');
 		$measuregrps1->setSubType('numeric');
@@ -317,8 +380,8 @@ class withings extends eqLogic {
 			$measuregrps5->setLogicalId('measuregrps5');
 			$measuregrps5->setIsVisible(1);
 			$measuregrps5->setName(__('Masse maigre', __FILE__));
-			$measuregrps5->setTemplate('dashboard', 'tile');
-			$measuregrps5->setTemplate('mobile', 'tile');
+			$measuregrps5->setTemplate('dashboard', 'line');
+			$measuregrps5->setTemplate('mobile', 'line');
 		}
 		$measuregrps5->setType('info');
 		$measuregrps5->setSubType('numeric');
@@ -332,8 +395,8 @@ class withings extends eqLogic {
 			$measuregrps6->setLogicalId('measuregrps6');
 			$measuregrps6->setIsVisible(1);
 			$measuregrps6->setName(__('Ratio masse grasse', __FILE__));
-			$measuregrps6->setTemplate('dashboard', 'tile');
-			$measuregrps6->setTemplate('mobile', 'tile');
+			$measuregrps6->setTemplate('dashboard', 'line');
+			$measuregrps6->setTemplate('mobile', 'line');
 		}
 		$measuregrps6->setType('info');
 		$measuregrps6->setSubType('numeric');
@@ -347,8 +410,8 @@ class withings extends eqLogic {
 			$measuregrps8->setLogicalId('measuregrps8');
 			$measuregrps8->setIsVisible(1);
 			$measuregrps8->setName(__('Masse grasse', __FILE__));
-			$measuregrps8->setTemplate('dashboard', 'tile');
-			$measuregrps8->setTemplate('mobile', 'tile');
+			$measuregrps8->setTemplate('dashboard', 'line');
+			$measuregrps8->setTemplate('mobile', 'line');
 		}
 		$measuregrps8->setType('info');
 		$measuregrps8->setSubType('numeric');
@@ -362,8 +425,8 @@ class withings extends eqLogic {
 			$measuregrps9->setLogicalId('measuregrps9');
 			$measuregrps9->setIsVisible(1);
 			$measuregrps9->setName(__('Diastolic', __FILE__));
-			$measuregrps9->setTemplate('dashboard', 'tile');
-			$measuregrps9->setTemplate('mobile', 'tile');
+			$measuregrps9->setTemplate('dashboard', 'line');
+			$measuregrps9->setTemplate('mobile', 'line');
 		}
 		$measuregrps9->setType('info');
 		$measuregrps9->setSubType('numeric');
@@ -377,8 +440,8 @@ class withings extends eqLogic {
 			$measuregrps10->setLogicalId('measuregrps10');
 			$measuregrps10->setIsVisible(1);
 			$measuregrps10->setName(__('Systolic', __FILE__));
-			$measuregrps10->setTemplate('dashboard', 'tile');
-			$measuregrps10->setTemplate('mobile', 'tile');
+			$measuregrps10->setTemplate('dashboard', 'line');
+			$measuregrps10->setTemplate('mobile', 'line');
 		}
 		$measuregrps10->setType('info');
 		$measuregrps10->setSubType('numeric');
@@ -392,8 +455,8 @@ class withings extends eqLogic {
 			$measuregrps11->setLogicalId('measuregrps11');
 			$measuregrps11->setIsVisible(1);
 			$measuregrps11->setName(__('Rythme cardiaque', __FILE__));
-			$measuregrps11->setTemplate('dashboard', 'tile');
-			$measuregrps11->setTemplate('mobile', 'tile');
+			$measuregrps11->setTemplate('dashboard', 'line');
+			$measuregrps11->setTemplate('mobile', 'line');
 		}
 		$measuregrps11->setType('info');
 		$measuregrps11->setSubType('numeric');
@@ -407,8 +470,8 @@ class withings extends eqLogic {
 			$measuregrps54->setLogicalId('measuregrps54');
 			$measuregrps54->setIsVisible(1);
 			$measuregrps54->setName(__('SP02', __FILE__));
-			$measuregrps54->setTemplate('dashboard', 'tile');
-			$measuregrps54->setTemplate('mobile', 'tile');
+			$measuregrps54->setTemplate('dashboard', 'line');
+			$measuregrps54->setTemplate('mobile', 'line');
 		}
 		$measuregrps54->setType('info');
 		$measuregrps54->setSubType('numeric');
@@ -498,7 +561,7 @@ class withings extends eqLogic {
 			}
 		}
 
-		$body = $this->getBody(date('Y-m-d'));
+		$body = $this->getBody(strtotime(date('Y-m-d')));
 		$foundMeasure = array();
 		if (isset($body['body']['measuregrps'][0]['measures'])) {
 			foreach ($body['body']['measuregrps'] as $measures) {
@@ -525,21 +588,12 @@ class withings extends eqLogic {
 		$mc->remove();
 		$mc = cache::byKey('withingsWidgetdashboard' . $this->getId());
 		$mc->remove();
-		$this->setCollectDate(date('Y-m-d H:i:s'));
 		$this->toHtml('mobile');
 		$this->toHtml('dashboard');
 		$this->refreshWidget();
 	}
 
 	/*     * **********************Getteur Setteur*************************** */
-
-	public function getCollectDate() {
-		return $this->_collectDate;
-	}
-
-	public function setCollectDate($_collectDate) {
-		$this->_collectDate = $_collectDate;
-	}
 
 }
 
