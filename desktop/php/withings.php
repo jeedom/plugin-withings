@@ -90,28 +90,10 @@ foreach (object::all() as $object) {
                         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
                     </div>
                 </div>
-		<div class="form-group">
-          <label class="col-sm-3 control-label">{{Client ID}}</label>
-          <div class="col-sm-3">
-            <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="client_id"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">{{Secret key}}</label>
-          <div class="col-sm-3">
-            <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="client_secret"/>
-          </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-3 control-label">{{URL de retour}}</label>
-            <div class="col-lg-4">
-                <span><?php echo network::getNetworkAccess('external') . '/plugins/withings/core/php/callback.php';?></span>
-            </div>
-        </div>
         <div class="form-group">
             <label class="col-lg-3 control-label">{{Lier}}</label>
             <div class="col-lg-2">
-                <a class="btn btn-default" id="bt_linkToUser"><i class='fa fa-refresh'></i> {{Lier à un utilisateur}}</a>
+                <a class="btn btn-default bt_oauth" data-service="withings" data-multiuser="1" data-href="<?php echo config::byKey('service::cloud::url') . '/frontend/login.html'; ?>"><i class="fas fa-link"></i> {{Lier à un utilisateur}}</a>
             </div>
         </div>
         <div class="form-group">

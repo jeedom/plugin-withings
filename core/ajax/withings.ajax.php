@@ -24,15 +24,6 @@ try {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 
-	if (init('action') == 'linkToUser') {
-		$eqLogic = eqLogic::byId(init('id'));
-		if (!is_object($eqLogic)) {
-			throw new Exception(__('EqLogic non trouvé : ', __FILE__) . init('id'));
-		}
-
-		ajax::success(array('redirect' => $eqLogic->linkToUser()));
-	}
-
 	if (init('action') == 'registerNotification') {
 		$eqLogic = eqLogic::byId(init('id'));
 		if (!is_object($eqLogic)) {

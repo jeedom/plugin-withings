@@ -47,172 +47,124 @@ class withings extends eqLogic {
 		}
 	}
 	
-	public static function authorizeWithings($_oauth_token,$_oauth_secret,$_consumer_key,$_consumer_secret){
-		$nonce = hash('sha1', self::makeRandomString());
-		$time = time();
-		$base_url = 'https://oauth.withings.com/account/authorize';
-		$url1 = 'oauth_consumer_key='.$_consumer_key . '&oauth_nonce=' . $nonce;
-		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$_oauth_token.'&oauth_version=1.0';
-		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
-		$oauth_signature = self::makeSignature($basestring,$_consumer_secret.'&'.$_oauth_secret);
-		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
-		return $url;
-	}
-	
-	public static function makeRandomString($bits = 256) {
-		$bytes = ceil($bits / 8);
-		$return = '';
-		for ($i = 0; $i < $bytes; $i++) {
-			$return .= chr(mt_rand(0, 255));
+	/*     * ***********************Methode static*************************** */
+
+	public static function getData($_path, $_options, $_userLogical) {
+		$url = config::byKey('service::cloud::url') . '/service/withings?path=' . urlencode(trim($_path, '/'));
+		$url .= '&user_logical=' . urlencode($_userLogical);
+		$url .= '&options=' . urlencode(json_encode($_options));
+
+		$requestHttp = new com_http($url);
+		$requestHttp->setHeader(array(
+			'Content-Type: application/json',
+			'Autorization: ' . sha512(mb_strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
+		));
+		$result = json_decode($requestHttp->exec(30, 1), true);
+		if (!is_array($result)) {
+			throw new Exception(__('[Withings] Réponse invalide du service cloud : ', __FILE__) . $result);
 		}
-		return $return;
-	}
-	
-	public static function makeSignature($_basestring,$_secret) {
-		$signature = hash_hmac("sha1", $_basestring, $_secret, True);
-		$based64 = base64_encode($signature);
-		return urlencode($based64);
+		if (isset($result['state']) && $result['state'] == 'nok') {
+			throw new Exception(__('[Withings] Erreur du service cloud : ', __FILE__) . (isset($result['error']) ? $result['error'] : 'Erreur inconnue'));
+		}
+		if (isset($result['status']) && $result['status'] != 0) {
+			throw new Exception(__('[Withings] Erreur API : ', __FILE__) . (isset($result['error']) ? $result['error'] : json_encode($result)));
+		}
+		return $result;
 	}
 
 	/*     * *********************Methode d'instance************************* */
 
+	public function callWithings($_path, $_parameters = array()) {
+		return self::getData($_path, $_parameters, $this->getId());
+	}
+
 	public function registerNotification() {
-		$callback = urlencode(network::getNetworkAccess('external') . '/plugins/withings/core/php/pull.php?eqLogic_id=' . $this->getId() . '&apikey=' . jeedom::getApiKey('withings'));
-		$type ='notify';
-		$subtype ='action=subscribe';
-		$nonce = hash('sha1', self::makeRandomString());
-		$time = time();
-		$base_url='https://wbsapi.withings.net/' . $type;
-		$consumer_key = $this->getConfiguration('client_id');
-		$consumer_secret = $this->getConfiguration('client_secret');
-		$oauthtoken = $this->getConfiguration('oauthtoken');
-		$oauthsecret = $this->getConfiguration('oauthsecret');
-		$userid =  $this->getConfiguration('userid');
-		$url1 = $subtype .'&callbackurl=' . $callback . '&comment=Jeedom&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
-		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&userid='.$userid;
-		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
-		$oauth_signature = self::makeSignature($basestring,$consumer_secret.'&'.$oauthsecret);
-		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
-		$cmd =  "curl --request GET '" . $url . "'";
-		$return = shell_exec($cmd);
-		return json_decode($return,true);
+		$callback = network::getNetworkAccess('external') . '/plugins/withings/core/php/pull.php?eqLogic_id=' .
+			$this->getId() . '&apikey=' . jeedom::getApiKey('withings');
+		$result = array('status' => 0, 'body' => array('profiles' => array()));
+
+		foreach (array(1, 4, 16, 44) as $appli) {
+			$response = $this->callWithings('notify', array(
+				'action' => 'subscribe',
+				'callbackurl' => $callback,
+				'comment' => 'Jeedom',
+				'appli' => $appli
+			));
+			if (isset($response['status']) && $response['status'] != 0) {
+				return $response;
+			}
+			$result['body']['profiles'][] = array(
+				'callbackurl' => $callback,
+				'comment' => 'Jeedom',
+				'appli' => $appli
+			);
+		}
+		return $result;
 	}
 
 	public function listNotification() {
-		$type ='notify';
-		$subtype ='action=list';
-		$result = $this->callWithings($type,$subtype);
-		log::add('withings','debug',$result);
-		return json_decode($result,true);
+		$result = $this->callWithings('notify', array('action' => 'list'));
+		log::add('withings', 'debug', json_encode($result));
+		return $result;
 	}
 
 	public function revokeNotification($_callback) {
-		$type ='notify';
-		$subtype ='action=revoke';
-		$nonce = hash('sha1', self::makeRandomString());
-		$withings = $this->getWithings();
-		$time = time();
-		$base_url='https://wbsapi.withings.net/' . $type;
-		$consumer_key = $this->getConfiguration('client_id');
-		$consumer_secret = $this->getConfiguration('client_secret');
-		$oauthtoken = $this->getConfiguration('oauthtoken');
-		$oauthsecret = $this->getConfiguration('oauthsecret');
-		$userid =  $this->getConfiguration('userid');
-		$url1 = $subtype .'&callbackurl=' . urlencode($_callback) . '&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
-		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&userid='.$userid;
-		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
-		$oauth_signature = self::makeSignature($basestring,$consumer_secret.'&'.$oauthsecret);
-		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
-		$cmd =  "curl --request GET '" . $url . "'";
-		$return = shell_exec($cmd);
-		return json_decode($return,true);
-	}
-	
-	public function linkToUser() {
-		@session_start();
-		$nonce = hash('sha1', self::makeRandomString());
-		$time = time();
-		$consumer_key = $this->getConfiguration('client_id');
-		$callback = urlencode(network::getNetworkAccess('external') . '/plugins/withings/core/php/callback.php?apikey=' . jeedom::getApiKey('withings') . '&eqLogic_id=' . $this->getId());
-		$base_url = 'https://oauth.withings.com/account/request_token';
-		$url1 = 'oauth_callback=' . $callback . '&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
-		$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_version=1.0';
-		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
-		$oauth_signature = self::makeSignature($basestring,$this->getConfiguration('client_secret').'&');
-		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
-		$cmd =  "curl --request GET '" . $url . "'";
-		$return = shell_exec($cmd);
-		$return = str_replace('oauth_token=','',$return);
-		$return = str_replace('_token_secret=','',$return);
-		$listResult = explode('&oauth',$return);
-		$oauth_token = $listResult[0];
-		$oauth_secret = $listResult[1];
-		$this->setConfiguration('oauthtoken',$oauth_token);
-		$this->setConfiguration('oauthsecret',$oauth_secret);
-		$this->save();
-		return self::authorizeWithings($oauth_token,$oauth_secret,$consumer_key,$this->getConfiguration('client_secret'));
-	}
-	
-	public function callWithings($_type,$_subtype,$_date='',$_startdate ='',$_enddate =''){
-		$base_url='https://wbsapi.withings.net/' . $_type;
-		$nonce = hash('sha1', self::makeRandomString());
-		$time = time();
-		$consumer_key = $this->getConfiguration('client_id');
-		$consumer_secret = $this->getConfiguration('client_secret');
-		$oauthtoken = $this->getConfiguration('oauthtoken');
-		$oauthsecret = $this->getConfiguration('oauthsecret');
-		$userid =  $this->getConfiguration('userid');
-		if ($_date != ''){
-			$url1 = $_subtype .'&date='.$_date.'&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
-		} else {
-			$url1 = $_subtype .'&oauth_consumer_key='.$consumer_key . '&oauth_nonce=' . $nonce;
+		$result = array('status' => 0);
+		foreach (array(1, 4, 16, 44) as $appli) {
+			$response = $this->callWithings('notify', array(
+				'action' => 'revoke',
+				'callbackurl' => $_callback,
+				'appli' => $appli
+			));
+			if (isset($response['status']) && $response['status'] != 0) {
+				return $response;
+			}
+			$result = $response;
 		}
-		if ($_startdate != '' && $_subtype != 'action=getmeas'){
-			$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&startdateymd='.$_startdate.'&enddateymd='.$_enddate.'&userid='.$userid;
-		} else if ($_startdate != '' && $_subtype == 'action=getmeas'){
-			$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&startdate='.$_startdate.'&userid='.$userid;
-		} else {
-			$url2 = '&oauth_signature_method=HMAC-SHA1&oauth_timestamp='.$time.'&oauth_token='.$oauthtoken.'&oauth_version=1.0&userid='.$userid;
-		}
-		$basestring = 'GET&' . urlencode($base_url) . '&' . urlencode($url1.$url2);
-		$oauth_signature = self::makeSignature($basestring,$consumer_secret.'&'.$oauthsecret);
-		$url = $base_url . '?' . $url1 . '&oauth_signature=' . $oauth_signature . $url2;
-		$cmd =  "curl --request GET '" . $url . "'";
-		log::add('withings','debug',$url);
-		$return = shell_exec($cmd);
-		return $return;
+		return $result;
 	}
 
 	public function getActivity($_date) {
-		$type ='v2/measure';
-		$subtype ='action=getactivity';
-		$result = $this->callWithings($type,$subtype,$_date);
-		log::add('withings','debug',$result);
-		return json_decode($result,true);
+		$result = $this->callWithings('v2/measure', array(
+			'action' => 'getactivity',
+			'startdateymd' => $_date,
+			'enddateymd' => $_date
+		));
+		log::add('withings', 'debug', json_encode($result));
+		return $result;
 	}
 
-	public function getBody($_date) {
-		$type ='measure';
-		$subtype ='action=getmeas';
-		$result = $this->callWithings($type,$subtype,'',$_date);
-		log::add('withings','debug',$result);
-		return json_decode($result,true);
+	public function getBody($_startdate) {
+		$result = $this->callWithings('measure', array(
+			'action' => 'getmeas',
+			'category' => 1,
+			'startdate' => $_startdate,
+			'enddate' => time()
+		));
+		log::add('withings', 'debug', json_encode($result));
+		return $result;
 	}
 
 	public function getSleepMesure($_startdate, $_enddate) {
-		$type ='v2/sleep';
-		$subtype ='action=get';
-		$result = $this->callWithings($type,$subtype,'',$_startdate,$_enddate);
-		log::add('withings','debug',$result);
-		return json_decode($result,true);
+		$result = $this->callWithings('v2/sleep', array(
+			'action' => 'get',
+			'startdate' => $_startdate,
+			'enddate' => $_enddate,
+			'data_fields' => 'hr,rr,snoring'
+		));
+		log::add('withings', 'debug', json_encode($result));
+		return $result;
 	}
 
 	public function getSleepSummary($_startdate, $_enddate) {
-		$type ='v2/sleep';
-		$subtype ='action=getsummary';
-		$result = $this->callWithings($type,$subtype,'',$_startdate,$_enddate);
-		log::add('withings','debug',$result);
-		return json_decode($result,true);
+		$result = $this->callWithings('v2/sleep', array(
+			'action' => 'getsummary',
+			'startdateymd' => $_startdate,
+			'enddateymd' => $_enddate,
+			'data_fields' => 'wakeupduration,durationtosleep,deepsleepduration,lightsleepduration,wakeupcount'
+		));
+		log::add('withings', 'debug', json_encode($result));
+		return $result;
 	}
 
 	public function postSave() {
@@ -570,10 +522,8 @@ class withings extends eqLogic {
 						$foundMeasure[$measure['type']] = true;
 						$cmd = $this->getCmd(null, 'measuregrps' . $measure['type']);
 						if (is_object($cmd)) {
-							$value = round($measure['value'], 2);
-							if ($measure['type'] == 1 || $measure['type'] == 5 || $measure['type'] == 6 || $measure['type'] == 8) {
-								$value = round($value / 1000, 2);
-							}
+							$unit = isset($measure['unit']) ? $measure['unit'] : 0;
+							$value = round($measure['value'] * pow(10, $unit), 2);
 							if ($cmd->execCmd() != $cmd->formatValue($value)) {
 								$cmd->setCollectDate('');
 								$cmd->event($value);

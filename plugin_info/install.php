@@ -25,6 +25,9 @@ function withings_update() {
 	}
 
 	foreach (withings::byType('withings') as $withings) {
+		foreach (array('client_id', 'client_secret', 'oauthtoken', 'oauthsecret', 'userid') as $key) {
+			$withings->setConfiguration($key, '');
+		}
 		$withings->save();
 	}
 }

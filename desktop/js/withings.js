@@ -20,30 +20,12 @@
 });
  $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
- $('#bt_linkToUser').on('click', function () {
-    $.ajax({// fonction permettant de faire de l'ajax
-        type: "POST", // methode de transmission des données au fichier php
-        url: "plugins/withings/core/ajax/withings.ajax.php", // url du fichier php
-        data: {
-            action: "linkToUser",
-            id: $('.eqLogic .eqLogicAttr[data-l1key=id]').value()
-        },
-        dataType: 'json',
-        error: function (request, status, error) {
-            handleAjaxError(request, status, error);
-        },
-        success: function (data) { // si l'appel a bien fonctionné
-        if (data.state != 'ok') {
-            $('#div_alert').showAlert({message: data.result, level: 'danger'});
-            return;
-        }
-        if (isset(data.result.redirect)) {
-            window.location.href = data.result.redirect;
-        } else {
-            $('#div_alert').showAlert({message: 'Synchronisation réussie', level: 'success'});
-        }
+ $('.bt_oauth').off('click').on('click', function () {
+    var url = $(this).data('href') + '?service=' + $(this).data('service');
+    if ($(this).data('multiuser') == 1) {
+        url += '&user_logical=' + $('.eqLogicAttr[data-l1key=id]').value();
     }
-});
+    window.open(url, '_blank');
 });
 
  $('#bt_registerNotification').on('click', function () {
