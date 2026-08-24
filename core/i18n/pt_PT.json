@@ -1,0 +1,71 @@
+{
+    "plugins\/withings\/core\/ajax\/withings.ajax.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Aucune methode correspondante à : ": "Não há nenhum método correspondente a: ",
+        "EqLogic non trouvé : ": "EqLogic não encontrado: "
+    },
+    "plugins\/withings\/core\/class\/withings.class.php": {
+        "Calories": "Calorias",
+        "Diastolic": "Diastólica",
+        "Distance": "Distância",
+        "Durée du réveil": "Duração do alarme",
+        "Elévation": "Alto-fundo",
+        "Erreur sur ": "Erro",
+        "Masse grasse": "Massa gorda",
+        "Masse maigre": "Massa magra",
+        "Nombre de réveils": "Número de despertadores",
+        "Pas": "Não",
+        "Poids": "Peso",
+        "Rafraichir": "Recarregar",
+        "Ratio masse grasse": "Índice de gordura corporal",
+        "Rythme cardiaque": "Frequência cardíaca",
+        "SP02": "SP02",
+        "Sommeil léger": "Sono leve",
+        "Sommeils profond": "Sono profundo",
+        "Systolic": "Sistólica",
+        "Temps pour dormir": "Hora de dormir",
+        "[Withings] Erreur API : ": "[Withings] Erro na API: ",
+        "[Withings] Erreur du service cloud : ": "[Withings] Erro no serviço na nuvem: ",
+        "[Withings] Réponse invalide du service cloud : ": "[Withings] Resposta inválida do serviço na nuvem: "
+    },
+    "plugins\/withings\/desktop\/js\/withings.js": {
+        "Afficher": "Mostrar",
+        "Historiser": "Histórico",
+        "Santé Withings": "Saúde Withings",
+        "Tester": "Testar"
+    },
+    "plugins\/withings\/desktop\/modal\/health.php": {
+        "Date création": "Data de criação",
+        "Dernière communication": "última mensagem",
+        "ID": "EU IRIA",
+        "Module": "Módulo"
+    },
+    "plugins\/withings\/desktop\/php\/withings.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Action": "Ação",
+        "Activer": "Ativar",
+        "Aucun": "Nenhum",
+        "Commandes": "Comandos",
+        "Configuration": "Configuração",
+        "Configuration avancée": "Configuração avançada",
+        "Dupliquer": "Duplicar",
+        "Désactiver": "Desativar",
+        "Equipement": "Equipamento",
+        "Gestion": "Gestão",
+        "Général": "Geral",
+        "Lier": "Ligar",
+        "Lier à un utilisateur": "Associar a um utilizador",
+        "Mes Equipements Withings": "Os meus dispositivos Withings",
+        "Mode push": "Modo push",
+        "Nom": "Nome",
+        "Nom de la personne": "Nome da pessoa",
+        "Nécessite de pouvoir accéder à jeedom de l'exterieur et d'avoir bien configuré la partie reseaux dans jeedom": "É necessário poder aceder ao Jeedom a partir do exterior e ter a parte de redes bem configurada no Jeedom",
+        "Objet parent": "Objeto pai",
+        "Options": "Opções",
+        "Rechercher": "Pesquisar",
+        "Santé": "Estado",
+        "Sauvegarder": "Guardar",
+        "Supprimer": "Eliminar",
+        "Visible": "Visível"
+    }
+}
