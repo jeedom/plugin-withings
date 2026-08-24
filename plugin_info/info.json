@@ -1,10 +1,25 @@
 {
-	"id" : "withings",
-	"name" : "Withings",
-	"description" : "Plugin pour Withings",
-	"licence" : "AGPL",
-	"installation" : "Le plugin nécessite un abonnement aux services cloud Jeedom. Un accès HTTPS externe reste nécessaire uniquement pour le mode push.",
-	"author" : "Ludovic et Loïc",
-	"require" : "2.4",
-	"category" : "health"
+	"id": "withings",
+	"name": "Withings",
+	"description": {
+		"fr_FR": "Plugin pour Withings",
+		"en_US": "Plugin for Withings",
+		"es_ES": "Complemento para Withings",
+		"de_DE": "Plugin für Withings",
+		"it_IT": "Plugin per Withings",
+		"pt_PT": "Plugin para Withings"
+	},
+	"licence": "AGPL",
+	"installation": "Le plugin nécessite un abonnement aux services cloud Jeedom. Un accès HTTPS externe reste nécessaire uniquement pour le mode push.",
+	"author": "Ludovic et Loïc",
+	"require": "2.4",
+	"category": "health",
+	"language": [
+		"de_DE",
+		"en_US",
+		"es_ES",
+		"fr_FR",
+		"it_IT",
+		"pt_PT"
+	]
 }
