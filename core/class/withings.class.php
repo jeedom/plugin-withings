@@ -55,9 +55,25 @@ class withings extends eqLogic {
 		$url .= '&options=' . urlencode(json_encode($_options));
 
 		$requestHttp = new com_http($url);
+		$cloudToken = null;
+		if (is_callable(array('repo_market', 'getCloudToken'))) {
+			try {
+				$cloudToken = repo_market::getCloudToken();
+			} catch (Exception $e) {
+				if ($e->getCode() !== 401) {
+					throw $e;
+				}
+			}
+		}
+		if ($cloudToken) {
+			if (strtolower((string) parse_url($requestHttp->getUrl(), PHP_URL_SCHEME)) !== 'https') {
+				throw new Exception(__('Le service Cloud doit utiliser HTTPS.', __FILE__));
+			}
+			$requestHttp->setNoSslCheck(false);
+		}
 		$requestHttp->setHeader(array(
 			'Content-Type: application/json',
-			'Autorization: ' . sha512(mb_strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
+			$cloudToken ? 'Authorization: Bearer ' . $cloudToken : 'Autorization: ' . sha512(mb_strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
 		));
 		$result = json_decode($requestHttp->exec(30, 1), true);
 		if (!is_array($result)) {
